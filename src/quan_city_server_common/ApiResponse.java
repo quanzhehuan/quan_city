@@ -9,13 +9,11 @@ public class ApiResponse {
 	
 	JSONObject body;
 	public ApiResponse() throws JSONException {
-		// TODO Auto-generated constructor stub
 		body.put("success", false);
 		body.put("msg", "");
 	}
 	
 	public ApiResponse(Boolean success,Object data, String msg) throws JSONException {
-		// TODO Auto-generated constructor stub
 		JSONObject item = new JSONObject();
 		item.put("success", success);
 		item.put("data", data);
