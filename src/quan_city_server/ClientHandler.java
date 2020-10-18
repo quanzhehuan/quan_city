@@ -52,10 +52,8 @@ public class ClientHandler implements Runnable {
 						}
 					}
 				} catch (JSONException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				} catch (SQLException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				DataOutputStream oos = new DataOutputStream(socket.getOutputStream());
