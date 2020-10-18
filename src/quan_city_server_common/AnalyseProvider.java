@@ -16,7 +16,6 @@ public class AnalyseProvider {
 	static Statement st;
 
 	public AnalyseProvider() {
-		// TODO Auto-generated constructor stub
 		System.out.println("create a connection to db");
 		dbconn = new JDBCConnection();
 		conn = dbconn.setConnection();
