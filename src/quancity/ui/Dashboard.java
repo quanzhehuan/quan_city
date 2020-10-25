@@ -1,4 +1,4 @@
-package quan_city_ui;
+package quancity.ui;
 
 import java.awt.EventQueue;
 
@@ -9,8 +9,8 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
-import quan_city_client.Client;
-import quan_city_ui.SensorAirList;
+import quancity.client.Client;
+import quancity.ui.SensorAirList;
 
 import java.awt.Font;
 import java.awt.event.ActionListener;
@@ -78,8 +78,8 @@ public class Dashboard {
 		btnMenuCityInfomation.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				//CityDetail ctDetail = new CityDetail(client, cID);
-				//ctDetail.frame.setVisible(true);
+				CityDetail ctDetail = new CityDetail(client, cID);
+				ctDetail.frame.setVisible(true);
 				frame.dispose();
 			}
 		});
@@ -93,7 +93,7 @@ public class Dashboard {
 
 				//CityTramway windowCityTramway  = new CityTramway(client, cID);
 				//windowCityTramway.frame.setVisible(true);
-				frame.dispose();
+				//frame.dispose();
 			}
 		});
 		btnMenuTramwayStation.setBounds(10, 132, 173, 23);
@@ -106,7 +106,7 @@ public class Dashboard {
 			public void actionPerformed(ActionEvent e) {
 				//VehiculeSensorList ctDetail = new VehiculeSensorList(client);
 				//ctDetail.frame.setVisible(true);
-				frame.dispose();
+				//frame.dispose();
 			}
 		});
 
@@ -127,7 +127,7 @@ public class Dashboard {
 		});
 		btnBackToList.setBounds(527, 11, 147, 23);
 		panel_dashboard.add(btnBackToList);
-		JLabel lblNewLabel = new JLabel("Puzzle City");
+		JLabel lblNewLabel = new JLabel("Quan City");
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 16));
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setBounds(214, 11, 197, 27);

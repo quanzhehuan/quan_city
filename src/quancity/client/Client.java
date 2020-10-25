@@ -1,4 +1,4 @@
-package quan_city_client;
+package quancity.client;
 
 import java.io.BufferedReader;
 import java.io.DataInputStream;
@@ -13,8 +13,8 @@ import java.util.Scanner;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import quan_city_client_common.ApiEnum;
-import quan_city_client_common.SendPackage;
+import quancity.client.common.ApiEnum;
+import quancity.client.common.SendPackage;
 
 
 public class Client extends Thread {
@@ -47,13 +47,12 @@ public class Client extends Thread {
 
 	private void showClientId() {
 		try {
-			System.out.println("Please enter id of the client ");
+			System.out.println("Please enter id of the client");
 			BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-//			Scanner scanner = new Scanner(System.in);
-//			String line = scanner.nextLine();
+			Scanner scanner = new Scanner(System.in);
+			String line = scanner.nextLine();
 			out.writeUTF("UserName");
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -100,8 +99,8 @@ public class Client extends Thread {
 			// sends output to the socket
 			out = new DataOutputStream(socket.getOutputStream());
 
-//				BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-//				out.writeUTF("UserName");
+				BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+		out.writeUTF("UserName");
 		} catch (UnknownHostException u) {
 			System.out.println(u);
 		} catch (IOException i) {
@@ -109,24 +108,22 @@ public class Client extends Thread {
 		}
 
 		showClientId();
-		// sendP.setApi(ApiEnum.CITY_FIND_ALL);
+		sendP.setApi(ApiEnum.ANALYSE_RATE_POLLUTION);
 		Boolean isSend = false;
 		while (!isSend) {
 			// if have new request from ui
-			// System.out.println("SendPackage:"+ sendP);
+			 System.out.println("SendPackage:"+ sendP);
 			if (sendP != null) {
 				System.out.println("SendPackage:" + sendP.toString());
 				try {
 					// get all city
 					out.writeUTF(sendP.toString());
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 
-				// safina chof lmok
 				try {
-					// System.out.println("Waiting for the result");
+					System.out.println("Waiting for the result");
 					DataInputStream oos = new DataInputStream(socket.getInputStream());
 					String msg = oos.readUTF();
 					try {
@@ -134,7 +131,6 @@ public class Client extends Thread {
 						responseData = resd;
 						// System.out.println(resd);
 					} catch (JSONException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 
@@ -148,7 +144,6 @@ public class Client extends Thread {
 				try {
 					Thread.sleep(500);
 				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}

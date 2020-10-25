@@ -1,4 +1,4 @@
-package quan_city_server_common;
+package quancity.server.common;
 
 import java.io.*;
 import java.sql.*;
@@ -7,7 +7,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import quan_city_server_connection.JDBCConnection;
+import quancity.server.connection.JDBCConnection;
 
 public class AnalyseProvider {
 
@@ -23,7 +23,7 @@ public class AnalyseProvider {
 	}
 	
 	//get byID 
-	public static ApiResponse getInfoAnalyse(int id) {
+	public ApiResponse getInfoAnalyse(int id) {
 		try {
 			String sql =  "select (SELECT COUNT(*) AS CountStation from tblstation WHERE sIdCity ="+ id +") AS CountStation"
 					+ ",(SELECT COUNT(*) AS CountSensor from tblsensorair) AS CountSensor"
@@ -43,6 +43,7 @@ public class AnalyseProvider {
 					JSONObject resItem = new JSONObject();                	
 
 					resItem.put("CountStation", rs.getInt("CountStation"));
+					System.out.println("(Result of JSONObject) CountStation : " + rs.getInt("CountStation"));
 					resItem.put("CountSensor",  rs.getInt("CountSensor"));
 					resItem.put("CountBollard",  rs.getInt("CountBollard"));
 					resItem.put("CountDistance",  rs.getInt("CountDistance"));

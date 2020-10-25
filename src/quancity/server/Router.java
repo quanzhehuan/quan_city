@@ -1,4 +1,4 @@
-package quan_city_server;
+package quancity.server;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -6,8 +6,8 @@ import java.sql.SQLException;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import quan_city_server_common.AnalyseProvider;
-import quan_city_server_common.ApiResponse;
+import quancity.server.common.AnalyseProvider;
+import quancity.server.common.ApiResponse;
 
 public class Router {
 
@@ -87,12 +87,10 @@ public class Router {
 				return new ApiResponse(false, null, "Not found API").toString();
 			}
 		} catch (JSONException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			try {
 				return new ApiResponse(false, null, e.getMessage()).toString();
 			} catch (JSONException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 				return null;
 			}

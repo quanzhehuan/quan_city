@@ -1,19 +1,20 @@
-package quan_city_client;
+package quancity.client;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import quan_city_client_common.ApiEnum;
-import quan_city_client_common.SendPackage;
-import quan_city_ui.CityAddNew;
-import quan_city_ui.CityList;
-import quan_city_ui.Dashboard;
+import quancity.client.common.ApiEnum;
+import quancity.client.common.SendPackage;
+import quancity.ui.CityAddNew;
+import quancity.ui.CityList;
+import quancity.ui.Dashboard;
 
 public class ClientMain {
 	static Client client;
 	public static void main(String args[]) {
-		client = new Client("172.31.249.155", 4000);
+		client = new Client("172.31.249.193", 4000);
+		//client = new Client("172.31.240.5", 4000);
 		client.start();
 		//System.out.println("call view");
 		//CityList windowCityList  = new CityList(client);
@@ -26,7 +27,7 @@ public class ClientMain {
 	public void getCityData() {
 		client.setResponseData(null);
 		SendPackage sendP = new SendPackage();
-		sendP.setApi(ApiEnum.CITY_FIND_ALL);		
+		//sendP.setApi(ApiEnum.CITY_FIND_ALL);		
 		client.setSendP(sendP);
 		JSONObject res = null;
 		while(res == null) {
@@ -47,8 +48,8 @@ public class ClientMain {
 							ctDetail.frame.setVisible(true);
 						}else{
 							System.out.println("Add new");
-							//CityAddNew ctAdd =	new CityAddNew(client);
-							//ctAdd.frame.setVisible(true);
+							CityAddNew ctAdd =	new CityAddNew(client);
+							ctAdd.frame.setVisible(true);
 						};
 					}else {						
 					}

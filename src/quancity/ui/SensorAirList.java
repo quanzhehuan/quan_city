@@ -1,4 +1,4 @@
-package quan_city_ui;
+package quancity.ui;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -32,9 +32,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import quan_city_client.Client;
-import quan_city_client_common.ApiEnum;
-import quan_city_client_common.SendPackage;
+import quancity.client.Client;
+import quancity.client.common.ApiEnum;
+import quancity.client.common.SendPackage;
+
 import javax.swing.JSlider;
 import java.awt.SystemColor;
 import javax.swing.JTextField;

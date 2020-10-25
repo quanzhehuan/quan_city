@@ -1,4 +1,4 @@
-package quan_city_server;
+package quancity.server;
 
 import java.io.DataOutputStream;
 import java.io.IOException;

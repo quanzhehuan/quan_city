@@ -1,4 +1,4 @@
-package quan_city_server;
+package quancity.server;
 
 import java.io.BufferedInputStream;
 import java.io.DataInputStream;
@@ -36,7 +36,7 @@ public class ClientHandler implements Runnable {
 			while (!line.equals("0")) {
 				String response = "";
 				try {
-					line = in.readUTF();	
+					line = in.readUTF();
 					if(!line.equals("0")) {
 						JSONObject input;
 						System.out.println(line);
@@ -58,10 +58,7 @@ public class ClientHandler implements Runnable {
 				}
 				DataOutputStream oos = new DataOutputStream(socket.getOutputStream());
 				// write object to Socket
-
 				oos.writeUTF(response);
-				
-
 			}
 			System.out.println("Closing connection");
 

@@ -1,4 +1,4 @@
-package quan_city_server_connection;
+package quancity.server.connection;
 
 import java.sql.*;
 import java.util.ArrayList;

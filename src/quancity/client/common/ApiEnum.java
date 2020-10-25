@@ -1,4 +1,4 @@
-package quan_city_client_common;
+package quancity.client.common;
 
 public enum ApiEnum {
 	CITY_CREATE,CITY_UPDATE,CITY_GET_ONE,DELETE,CITY_FIND_ALL,CLOSE_CONNECTION,TRAMWAY_GET_ONE,TRAMWAY_UPDATE,TRAMWAY_MAP_RANDOM,CITY_DELETE
