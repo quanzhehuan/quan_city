@@ -4,8 +4,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class SendPackage {
-	
-	private JSONObject body;	
+
+	private JSONObject body;
 	private ApiEnum api;
 
 	public SendPackage() {
@@ -36,7 +36,7 @@ public class SendPackage {
 	}
 
 	public void setApi(ApiEnum api) {
-		this.api = api;	
+		this.api = api;
 	}
 
 	@Override
@@ -48,6 +48,6 @@ public class SendPackage {
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
-		return send.toString() ;
+		return send.toString();
 	}
 }

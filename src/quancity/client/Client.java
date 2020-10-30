@@ -16,7 +16,6 @@ import org.json.JSONObject;
 import quancity.client.common.ApiEnum;
 import quancity.client.common.SendPackage;
 
-
 public class Client extends Thread {
 	// Thread for socket
 	private Thread t;
@@ -37,10 +36,10 @@ public class Client extends Thread {
 			socket = new Socket(address, port);
 			outmsg = new PrintWriter(socket.getOutputStream(), true);
 			inmsg = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-		} catch (UnknownHostException u) {
-			System.out.println(u);
-		} catch (IOException i) {
-			System.out.println(i);
+		} catch (UnknownHostException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 
 	}
@@ -51,7 +50,7 @@ public class Client extends Thread {
 			BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 			Scanner scanner = new Scanner(System.in);
 			String line = scanner.nextLine();
-			out.writeUTF("UserName");
+			out.writeUTF(UserName);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -68,8 +67,8 @@ public class Client extends Thread {
 			out.close();
 			outmsg.close();
 			socket.close();
-		} catch (IOException i) {
-			System.out.println(i);
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 
@@ -98,13 +97,12 @@ public class Client extends Thread {
 			input = new DataInputStream(System.in);
 			// sends output to the socket
 			out = new DataOutputStream(socket.getOutputStream());
-
-				BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-		out.writeUTF("UserName");
-		} catch (UnknownHostException u) {
-			System.out.println(u);
-		} catch (IOException i) {
-			System.out.println(i);
+			BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+			out.writeUTF(UserName);
+		} catch (UnknownHostException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 
 		showClientId();
@@ -112,33 +110,35 @@ public class Client extends Thread {
 		Boolean isSend = false;
 		while (!isSend) {
 			// if have new request from ui
-			 System.out.println("SendPackage:"+ sendP);
+			System.out.println("SendPackage:" + sendP);
 			if (sendP != null) {
-				System.out.println("SendPackage:" + sendP.toString());
-				try {
-					// get all city
-					out.writeUTF(sendP.toString());
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-
-				try {
-					System.out.println("Waiting for the result");
-					DataInputStream oos = new DataInputStream(socket.getInputStream());
-					String msg = oos.readUTF();
+				if (sendP.getApi() == ApiEnum.CLOSE_CONNECTION) {
+					isSend = true;
+					closeConnection();
+				} else {
+					System.out.println("SendPackage:" + sendP.toString());
 					try {
-						JSONObject resd = new JSONObject(msg);
-						responseData = resd;
-						// System.out.println(resd);
-					} catch (JSONException e) {
-						e.printStackTrace();
+						out.writeUTF(sendP.toString());
+					} catch (IOException e) {
+						isSend = true;
+						System.out.println("Server close connection!");
+						break;
 					}
-
-					sendP = null;
-					// isSend = true;
-
-				} catch (IOException i) {
-					System.out.println(i);
+					try {
+						System.out.println("Waiting for the result");
+						DataInputStream oos = new DataInputStream(socket.getInputStream());
+						String msg = oos.readUTF();
+						try {
+							JSONObject resd = new JSONObject(msg);
+							responseData = resd;
+							System.out.println(resd);
+						} catch (JSONException e) {
+							e.printStackTrace();
+						}
+						sendP = null;
+					} catch (IOException i) {
+						System.out.println(i);
+					}
 				}
 			} else {
 				try {
@@ -149,11 +149,11 @@ public class Client extends Thread {
 			}
 		}
 	}
-	
+
 	public void sendMessage(String msg) throws IOException {
 		outmsg.println(msg);
 	}
-	
+
 	public String getMessage() throws IOException {
 		String resp;
 		resp = inmsg.readLine();

@@ -12,7 +12,6 @@ public class Server extends Thread {
 	private Socket socket = null;
 	private ServerSocket server = null;
 
-
 	// constructor with port
 	public Server(int port) {
 
@@ -21,11 +20,9 @@ public class Server extends Thread {
 			server = new ServerSocket(port);
 			server.setReuseAddress(true);
 			System.out.println("Server started on port " + port);
-
 			System.out.println("Waiting for a client ...");
-			
 			while (true) {
-				socket = server.accept();				
+				socket = server.accept();
 				ClientHandler clientSock = new ClientHandler(socket);
 				new Thread(clientSock).start();
 			}
@@ -41,9 +38,10 @@ public class Server extends Thread {
 			}
 		}
 	}
+
 	public static void main(String[] args) {
-		System.out.println("Hello from server"); 
-				new Server(4000);
+		System.out.println("Hello from server");
+		new Server(4000);
 	}
 
 }

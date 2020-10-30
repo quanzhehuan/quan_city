@@ -7,18 +7,19 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import quancity.server.connection.JDBCConnection;
+import quancity.server.connection.JDBCConnectionPool;
 
 public class AnalyseProvider {
 
-	JDBCConnection dbconn;
+	JDBCConnectionPool dbconn;
 	static Connection conn;
 	static Statement st;
 
 	public AnalyseProvider() {
 		System.out.println("create a connection to db");
-		dbconn = new JDBCConnection();
-		conn = dbconn.setConnection();
+		dbconn = new JDBCConnectionPool();
+		//-------------------JDBCConnection to JDBCConnectionPool
+		//conn = dbconn.setConnection();
 		System.out.println("create connection successfully");
 	}
 	
