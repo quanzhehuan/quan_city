@@ -50,7 +50,7 @@ public class Client extends Thread {
 			BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 			Scanner scanner = new Scanner(System.in);
 			String line = scanner.nextLine();
-			out.writeUTF(UserName);
+			out.writeUTF("UserName");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -98,7 +98,7 @@ public class Client extends Thread {
 			// sends output to the socket
 			out = new DataOutputStream(socket.getOutputStream());
 			BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-			out.writeUTF(UserName);
+			out.writeUTF("UserName");
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -106,11 +106,49 @@ public class Client extends Thread {
 		}
 
 		showClientId();
-		sendP.setApi(ApiEnum.ANALYSE_RATE_POLLUTION);
+		sendP.setApi(ApiEnum.CITY_FIND_ALL);
 		Boolean isSend = false;
 		while (!isSend) {
 			// if have new request from ui
 			System.out.println("SendPackage:" + sendP);
+			
+			
+			
+			if (sendP != null) {
+				System.out.println("SendPackage:" + sendP.toString());
+				try {
+					// get all city
+					out.writeUTF(sendP.toString());
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+				// safina chof lmok
+				try {
+					// System.out.println("Waiting for the result");
+					DataInputStream oos = new DataInputStream(socket.getInputStream());
+					String msg = oos.readUTF();
+					try {
+						JSONObject resd = new JSONObject(msg);
+						responseData = resd;
+						// System.out.println(resd);
+					} catch (JSONException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+
+					sendP = null;
+					// isSend = true;
+
+				} catch (IOException i) {
+					System.out.println(i);
+				}
+			}
+			
+			
+			
+			/*
 			if (sendP != null) {
 				if (sendP.getApi() == ApiEnum.CLOSE_CONNECTION) {
 					isSend = true;
@@ -140,7 +178,9 @@ public class Client extends Thread {
 						System.out.println(i);
 					}
 				}
-			} else {
+			}
+			*/
+			 else {
 				try {
 					Thread.sleep(500);
 				} catch (InterruptedException e) {

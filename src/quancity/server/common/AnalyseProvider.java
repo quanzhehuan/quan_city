@@ -19,7 +19,7 @@ public class AnalyseProvider {
 		System.out.println("create a connection to db");
 		dbconn = new JDBCConnectionPool();
 		//-------------------JDBCConnection to JDBCConnectionPool
-		//conn = dbconn.setConnection();
+		conn = dbconn.addConnection();
 		System.out.println("create connection successfully");
 	}
 	

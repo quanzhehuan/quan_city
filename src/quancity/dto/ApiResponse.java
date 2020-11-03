@@ -1,4 +1,4 @@
-package quancity.server.common;
+package quancity.dto;
 import java.util.ArrayList;
 
 import org.json.JSONArray;

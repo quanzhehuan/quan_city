@@ -19,7 +19,7 @@ public class CityProvider {
 		System.out.println("create a connection to db");
 		dbconn = new JDBCConnectionPool();
 		//-------------------JDBCConnection to JDBCConnectionPool
-		//conn = dbconn.setConnection();
+		conn = dbconn.addConnection();
 		System.out.println("create connection successfully");
 	}
 
@@ -35,14 +35,12 @@ public class CityProvider {
 			while(rs.next()){
 				JSONObject resItem = new JSONObject();           	
 				resItem.put("ID", rs.getInt("cId"));  
-
 				resItem.put("Name", rs.getString("cName"));        	
 				resItem.put("Height", rs.getFloat("cHeight"));        	
 				resItem.put("Width", rs.getFloat("cWidth"));        	
 				resItem.put("CenterLat", rs.getFloat("cCenterLat"));	
 				resItem.put("CenterLong", rs.getFloat("cCenterLong"));	
 				resItem.put("MapZoom", rs.getInt("cMapZoom"));
-
 
 				cityAll.put(resItem);
 

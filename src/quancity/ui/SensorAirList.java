@@ -32,10 +32,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import quancity.client.Client;
-import quancity.client.common.ApiEnum;
-import quancity.client.common.SendPackage;
-
+import puzzle_city_client.Client;
+import puzzle_city_client_model.ApiEnum;
+import puzzle_city_client_model.SendPackage;
+import puzzle_city_client_model.SensorQualityAirTable;
 import javax.swing.JSlider;
 import java.awt.SystemColor;
 import javax.swing.JTextField;
@@ -60,6 +60,7 @@ public class SensorAirList {
 	private JSlider sliderTimer;
 	private TimerTask task;
 	private JLabel labelx;
+	SimulationSensorAir simulation;
 	boolean timerStart;
 
 	/**
@@ -78,6 +79,7 @@ public class SensorAirList {
 		this.cron = cron;
 
 		client = socket;
+		this.simulation = new SimulationSensorAir(socket);
 		initialize();
 
 		getSensorAirData();
@@ -85,12 +87,16 @@ public class SensorAirList {
 	}
 
 	public SensorAirList(Client socket) {
+
 		client = socket;
+		this.simulation = new SimulationSensorAir(socket);
 		initialize();
+
 		getSensorAirData();
 	}
 
 	public SensorAirList(JTable tblsensorair) {
+
 		this.tblsensorair = tblsensorair;
 	}
 
@@ -111,6 +117,7 @@ public class SensorAirList {
 		frame.getContentPane().add(panel);
 
 		// table
+		SensorQualityAirTable tcb = new SensorQualityAirTable();
 
 //		//set data  for table	
 		// add city
@@ -154,6 +161,9 @@ public class SensorAirList {
 				int alertId = (int) list.get(row)[7];
 				boolean isActivated = (boolean) list.get(row)[8];
 				// System.out.println("ppp" + globalModel.getColumnCount());
+				ConfigSensorAir cS = new ConfigSensorAir(client, id, address, no2, pm10, o3, alert, alertId,
+						isActivated, counter, timer, Integer.parseInt(textField.getText()),timerStart);
+				cS.frame.setVisible(true);
 				frame.dispose();
 
 			}
@@ -167,6 +177,8 @@ public class SensorAirList {
 		JButton btnCreateButton = new JButton("Add new sensor ");
 		btnCreateButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				CreateSensorAir saAdd = new CreateSensorAir(client, counter, timer, cron);
+				saAdd.frame.setVisible(true);
 				frame.dispose();
 			}
 		});
@@ -196,6 +208,9 @@ public class SensorAirList {
 		JButton btnThresholdDetails = new JButton("Threshold details\r\n");
 		btnThresholdDetails.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				ReglementationFrance rf = new ReglementationFrance(client, counter, timer,
+						Integer.parseInt(textField.getText()));
+				rf.frame.setVisible(true);
 				frame.dispose();
 			}
 		});
@@ -310,6 +325,7 @@ public class SensorAirList {
 	}
 
 	private void getSensorAirData() {
+		// TODO Auto-generated method stub
 		client.setResponseData(null);
 		SendPackage sendP = new SendPackage();
 		sendP.setApi(ApiEnum.SENSORAIR_FIND_ALL);
@@ -439,7 +455,9 @@ public class SensorAirList {
 				}
 				if (counter == -1) {
 //					timer.cancel();
+                   simulation.launchSimulation();
 					counter = d;
+
 				}
 			}
 		};

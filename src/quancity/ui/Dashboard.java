@@ -9,8 +9,8 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
-import quancity.client.Client;
-import quancity.ui.SensorAirList;
+import puzzle_city_client.Client;
+import puzzle_city_ui.SensorAirList;
 
 import java.awt.Font;
 import java.awt.event.ActionListener;
@@ -50,6 +50,7 @@ public class Dashboard {
 	}
 
 	public Dashboard() {
+		// TODO Auto-generated constructor stub
 	}
 
 	/**
@@ -91,9 +92,9 @@ public class Dashboard {
 		btnMenuTramwayStation.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				//CityTramway windowCityTramway  = new CityTramway(client, cID);
-				//windowCityTramway.frame.setVisible(true);
-				//frame.dispose();
+				CityTramway windowCityTramway  = new CityTramway(client, cID);
+				windowCityTramway.frame.setVisible(true);
+				frame.dispose();
 			}
 		});
 		btnMenuTramwayStation.setBounds(10, 132, 173, 23);
@@ -104,9 +105,10 @@ public class Dashboard {
 		panel.add(btnMenuVehiculeSensor);
 		btnMenuVehiculeSensor.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//VehiculeSensorList ctDetail = new VehiculeSensorList(client);
-				//ctDetail.frame.setVisible(true);
-				//frame.dispose();
+
+				VehiculeSensorList ctDetail = new VehiculeSensorList(client);
+				ctDetail.frame.setVisible(true);
+				frame.dispose();
 			}
 		});
 
@@ -120,14 +122,14 @@ public class Dashboard {
 		btnBackToList.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				//CityList windowCityList = new CityList(client);
-				//windowCityList.frame.setVisible(true);
+				CityList windowCityList = new CityList(client);
+				windowCityList.frame.setVisible(true);
 				frame.dispose();
 			}
 		});
 		btnBackToList.setBounds(527, 11, 147, 23);
 		panel_dashboard.add(btnBackToList);
-		JLabel lblNewLabel = new JLabel("Quan City");
+		JLabel lblNewLabel = new JLabel("Puzzle City");
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 16));
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setBounds(214, 11, 197, 27);
@@ -146,8 +148,8 @@ public class Dashboard {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 
-				//AnalyseUI analyse = new AnalyseUI(client, cID);
-				//analyse.frame.setVisible(true);
+				AnalyseUI analyse = new AnalyseUI(client, cID);
+				analyse.frame.setVisible(true);
 				frame.dispose();
 			}
 		});
