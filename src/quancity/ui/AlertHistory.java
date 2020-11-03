@@ -33,7 +33,7 @@ import org.json.JSONObject;
 import quancity.client.Client;
 import quancity.client.common.ApiEnum;
 import quancity.client.common.SendPackage;
-import puzzle_city_client_model.SensorQualityAirTable;
+import quancity.model.SensorQualityAirTable;
 
 public class AlertHistory {
 

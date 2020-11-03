@@ -6,15 +6,15 @@ import java.sql.SQLException;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import puzzle_city_dto.ActualDataProvider;
-import puzzle_city_dto.AnalyseProvider;
-import puzzle_city_dto.CarbonDataProvider;
-import puzzle_city_dto.CityProvider;
-import puzzle_city_dto.SensorQualityAirProvider;
-import puzzle_city_dto.VehiculeSensorProvider;
-import puzzle_city_model.ApiResponse;
-import puzzle_city_dto.TramwayProvider;
-import puzzle_city_dto.ThresholdProvider;
+import quancity.dto.ActualDataProvider;
+import quancity.dto.AnalyseProvider;
+import quancity.dto.CarbonDataProvider;
+import quancity.dto.CityProvider;
+import quancity.dto.SensorQualityAirProvider;
+import quancity.dto.VehiculeSensorProvider;
+import quancity.model.ApiResponse;
+import quancity.dto.TramwayProvider;
+import quancity.dto.ThresholdProvider;
 
 public class Router {
 	// Empreinte carbone
