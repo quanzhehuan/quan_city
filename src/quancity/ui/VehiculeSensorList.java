@@ -19,11 +19,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import puzzle_city_client.Client;
-import puzzle_city_client_model.ApiEnum;
-import puzzle_city_client_model.VehiculeSensorTable;
-import puzzle_city_model.ApiResponse;
-import puzzle_city_client_model.SendPackage;
+import quancity.client.Client;
+import quancity.client.common.ApiEnum;
+import quancity.model.VehiculeSensorTable;
+import quancity.model.ApiResponse;
+import quancity.client.common.SendPackage;
 
 import javax.swing.JTable;
 import javax.swing.JTextField;

@@ -1,6 +1,6 @@
 package quancity.server.common;
 
-import puzzle_city_model.AlertModel;
+import quancity.model.AlertModel;
 
 public class SensorQualityAirModel {
 

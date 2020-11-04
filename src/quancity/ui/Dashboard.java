@@ -9,8 +9,8 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
-import puzzle_city_client.Client;
-import puzzle_city_ui.SensorAirList;
+import quancity.client.Client;
+import quancity.ui.SensorAirList;
 
 import java.awt.Font;
 import java.awt.event.ActionListener;

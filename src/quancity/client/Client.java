@@ -14,8 +14,8 @@ import java.util.Scanner;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import quancity.model.ApiEnum;
-import quancity.model.SendPackage;
+import quancity.client.common.ApiEnum;
+import quancity.client.common.SendPackage;
 import quancity.ui.CityList;
 
 public class Client extends Thread {

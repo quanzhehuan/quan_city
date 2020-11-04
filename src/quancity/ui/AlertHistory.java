@@ -194,7 +194,7 @@ public class AlertHistory {
 
 			
 			sendP.setBody(bodyItem);
-			client.setSendP(sendP);
+			//client.setSendP(sendP);
 			JSONObject res = null;
 			while (res == null) {
 
@@ -214,14 +214,12 @@ public class AlertHistory {
 						} else {
 						}
 					} catch (JSONException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				}
 			}
 			//
 		} catch (JSONException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		client.setResponseData(null);

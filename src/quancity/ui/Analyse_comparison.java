@@ -15,9 +15,9 @@ import org.json.JSONObject;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import puzzle_city_client.Client;
-import puzzle_city_client_model.ApiEnum;
-import puzzle_city_client_model.SendPackage;
+import quancity.client.Client;
+import quancity.client.common.ApiEnum;
+import quancity.client.common.SendPackage;
 
 import javax.swing.JLabel;
 import java.awt.event.ActionListener;

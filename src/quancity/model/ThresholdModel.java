@@ -1,4 +1,4 @@
-package quancity.dto;
+package quancity.model;
 
 public class ThresholdModel {
 	private int ID;

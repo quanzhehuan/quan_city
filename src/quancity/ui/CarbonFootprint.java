@@ -18,12 +18,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 
-import puzzle_city_client.Client;
-import puzzle_city_client_model.ActualDataTable;
-import puzzle_city_client_model.ApiEnum;
-import puzzle_city_client_model.CarbonDataTable;
-import puzzle_city_client_model.CityTable;
-import puzzle_city_client_model.SendPackage;
+import quancity.client.Client;
+import quancity.model.ActualDataTable;
+import quancity.client.common.ApiEnum;
+import quancity.model.CarbonDataTable;
+import quancity.model.CityTable;
+import quancity.client.common.SendPackage;
 
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
