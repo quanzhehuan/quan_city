@@ -6,6 +6,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+// A Java program for a Client 
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.Scanner;
@@ -13,8 +14,9 @@ import java.util.Scanner;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import quancity.client.common.ApiEnum;
-import quancity.client.common.SendPackage;
+import quancity.model.ApiEnum;
+import quancity.model.SendPackage;
+import quancity.ui.CityList;
 
 public class Client extends Thread {
 	// Thread for socket
@@ -36,22 +38,23 @@ public class Client extends Thread {
 			socket = new Socket(address, port);
 			outmsg = new PrintWriter(socket.getOutputStream(), true);
 			inmsg = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-		} catch (UnknownHostException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
+		} catch (UnknownHostException u) {
+			System.out.println(u);
+		} catch (IOException i) {
+			System.out.println(i);
 		}
 
 	}
 
 	private void showClientId() {
 		try {
-			System.out.println("Please enter id of the client");
+			System.out.println("Please enter id of the client ");
 			BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-			Scanner scanner = new Scanner(System.in);
-			String line = scanner.nextLine();
+//			Scanner scanner = new Scanner(System.in);
+//			String line = scanner.nextLine();
 			out.writeUTF("UserName");
 		} catch (IOException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -67,8 +70,8 @@ public class Client extends Thread {
 			out.close();
 			outmsg.close();
 			socket.close();
-		} catch (IOException e) {
-			e.printStackTrace();
+		} catch (IOException i) {
+			System.out.println(i);
 		}
 	}
 
@@ -97,23 +100,21 @@ public class Client extends Thread {
 			input = new DataInputStream(System.in);
 			// sends output to the socket
 			out = new DataOutputStream(socket.getOutputStream());
-			BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-			out.writeUTF("UserName");
-		} catch (UnknownHostException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
+
+//				BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+//				out.writeUTF("UserName");
+		} catch (UnknownHostException u) {
+			System.out.println(u);
+		} catch (IOException i) {
+			System.out.println(i);
 		}
 
 		showClientId();
-		sendP.setApi(ApiEnum.CITY_FIND_ALL);
+		// sendP.setApi(ApiEnum.CITY_FIND_ALL);
 		Boolean isSend = false;
 		while (!isSend) {
 			// if have new request from ui
-			System.out.println("SendPackage:" + sendP);
-			
-			
-			
+			// System.out.println("SendPackage:"+ sendP);
 			if (sendP != null) {
 				System.out.println("SendPackage:" + sendP.toString());
 				try {
@@ -144,56 +145,21 @@ public class Client extends Thread {
 				} catch (IOException i) {
 					System.out.println(i);
 				}
-			}
-			
-			
-			
-			/*
-			if (sendP != null) {
-				if (sendP.getApi() == ApiEnum.CLOSE_CONNECTION) {
-					isSend = true;
-					closeConnection();
-				} else {
-					System.out.println("SendPackage:" + sendP.toString());
-					try {
-						out.writeUTF(sendP.toString());
-					} catch (IOException e) {
-						isSend = true;
-						System.out.println("Server close connection!");
-						break;
-					}
-					try {
-						System.out.println("Waiting for the result");
-						DataInputStream oos = new DataInputStream(socket.getInputStream());
-						String msg = oos.readUTF();
-						try {
-							JSONObject resd = new JSONObject(msg);
-							responseData = resd;
-							System.out.println(resd);
-						} catch (JSONException e) {
-							e.printStackTrace();
-						}
-						sendP = null;
-					} catch (IOException i) {
-						System.out.println(i);
-					}
-				}
-			}
-			*/
-			 else {
+			} else {
 				try {
 					Thread.sleep(500);
 				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
 		}
 	}
-
+	
 	public void sendMessage(String msg) throws IOException {
 		outmsg.println(msg);
 	}
-
+	
 	public String getMessage() throws IOException {
 		String resp;
 		resp = inmsg.readLine();
