@@ -14,7 +14,7 @@ public class ClientMain {
 	static Client client;
 
 	public static void main(String args[]) {
-		client = new Client("172.31.240.3", 4000);
+		client = new Client("172.31.240.27", 4000);
 		client.start();
 		// System.out.println("call view");
 		CityList windowCityList = new CityList(client);
@@ -25,7 +25,7 @@ public class ClientMain {
 	public void getCityData() {
 		client.setResponseData(null);
 		SendPackage sendP = new SendPackage();
-		// sendP.setApi(ApiEnum.CITY_FIND_ALL);
+		sendP.setApi(ApiEnum.CITY_FIND_ALL);
 		
 		client.setSendP(sendP);
 
