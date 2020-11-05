@@ -6,14 +6,14 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 @SuppressWarnings("unused")
-public class Server extends Thread {
+public class ServerMain extends Thread {
 
 	// initialize socket and input stream
 	private Socket socket = null;
 	private ServerSocket server = null;
 
 	// constructor with port
-	public Server(int port) {
+	public ServerMain(int port) {
 
 		// starts server and waits for a connection
 		try {
@@ -41,7 +41,7 @@ public class Server extends Thread {
 
 	public static void main(String[] args) {
 		System.out.println("Hello from server");
-		new Server(4000);
+		new ServerMain(3000);
 	}
 
 }

@@ -3,24 +3,23 @@ package quancity.client.common;
 import javax.swing.table.AbstractTableModel;
 
 public class CityTable extends AbstractTableModel {
-	  public final static String[] columnNames = {
-			  "ID",  "City Name", "Width", "Height", "LatLong"
-		    };
-	  public Object[][] values = {{"","","","",""}};
-	  public int getRowCount() {
-	        return values.length;
-	    }
+	public final static String[] columnNames = { "ID", "City Name", "Width", "Height", "LatLong" };
+	public Object[][] values = { { "", "", "", "", "" } };
 
-	    public int getColumnCount() {
-	        return values[0].length;
-	    }
+	public int getRowCount() {
+		return values.length;
+	}
 
-	    public Object getValueAt(int rowIndex, int columnIndex) {
-	        return values[rowIndex][columnIndex];
-	    }
+	public int getColumnCount() {
+		return values[0].length;
+	}
 
-	    @Override
-	    public String getColumnName(int column){
-	        return columnNames[column];
-	    }
+	public Object getValueAt(int rowIndex, int columnIndex) {
+		return values[rowIndex][columnIndex];
+	}
+
+	@Override
+	public String getColumnName(int column) {
+		return columnNames[column];
+	}
 }

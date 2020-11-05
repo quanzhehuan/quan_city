@@ -18,7 +18,6 @@ public class JDBCConnection {
     
     public Connection setConnection() {
     	try{
-    		//conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3308/puzzle_db?serverTimezone=UTC", "root", "");
     		conn = DriverManager.getConnection("jdbc:mysql://172.31.249.191:3306/puzzle_01?serverTimezone=UTC", "root", "toto");
 	    	if (conn != null) {
 	         //   System.out.println("Connected to the database!");

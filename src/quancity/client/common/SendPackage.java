@@ -1,4 +1,5 @@
 package quancity.client.common;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -8,6 +9,7 @@ public class SendPackage {
 
 	public SendPackage() {
 		super();
+		// TODO Auto-generated constructor stub
 	}
 
 	public SendPackage(ApiEnum api) {
@@ -44,9 +46,11 @@ public class SendPackage {
 			send.put("api", this.api);
 			send.put("body", this.body);
 		} catch (JSONException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return send.toString() ;
 	}
 
 }
+
