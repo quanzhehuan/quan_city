@@ -1,30 +1,40 @@
 package quancity.server.common;
 
 import java.io.*;
+import java.awt.print.Printable;
+
 import java.sql.*;
+import java.time.Instant;
+import java.util.ArrayList;
+import java.util.Calendar;
+
+import javax.swing.text.html.HTMLEditorKit.Parser;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import quancity.server.connection.JDBCConnectionPool;
+import quancity.dto.JDBCConnection;
+import quancity.model.AlertModel;
+import quancity.model.ApiResponse;
+import quancity.model.SensorQualityAirModel;
 
 public class AnalyseProvider {
 
-	JDBCConnectionPool dbconn;
+	JDBCConnection dbconn;
 	static Connection conn;
 	static Statement st;
 
 	public AnalyseProvider() {
+		// TODO Auto-generated constructor stub
 		System.out.println("create a connection to db");
-		dbconn = new JDBCConnectionPool();
-		//-------------------JDBCConnection to JDBCConnectionPool
-		conn = dbconn.addConnection();
+		dbconn = new JDBCConnection();
+		conn = dbconn.setConnection();
 		System.out.println("create connection successfully");
 	}
 	
 	//get byID 
-	public ApiResponse getInfoAnalyse(int id) {
+	public static ApiResponse getInfoAnalyse(int id) {
 		try {
 			String sql =  "select (SELECT COUNT(*) AS CountStation from tblstation WHERE sIdCity ="+ id +") AS CountStation"
 					+ ",(SELECT COUNT(*) AS CountSensor from tblsensorair) AS CountSensor"
@@ -44,7 +54,6 @@ public class AnalyseProvider {
 					JSONObject resItem = new JSONObject();                	
 
 					resItem.put("CountStation", rs.getInt("CountStation"));
-					System.out.println("(Result of JSONObject) CountStation : " + rs.getInt("CountStation"));
 					resItem.put("CountSensor",  rs.getInt("CountSensor"));
 					resItem.put("CountBollard",  rs.getInt("CountBollard"));
 					resItem.put("CountDistance",  rs.getInt("CountDistance"));
