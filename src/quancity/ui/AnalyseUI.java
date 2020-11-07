@@ -22,11 +22,14 @@ import quancity.client.common.SendPackage;
 import javax.swing.JLabel;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.awt.event.ActionEvent;
 import javax.swing.SwingConstants;
 import java.awt.Font;
+import java.util.Date;
+import java.text.SimpleDateFormat;
 
 public class AnalyseUI {
 
@@ -74,7 +77,7 @@ public class AnalyseUI {
 		label.setHorizontalAlignment(SwingConstants.RIGHT);
 		panel.add(label);
 		
-		JLabel lblNewLabel = new JLabel("2020-07-03");
+		JLabel lblNewLabel = new JLabel(Calendar.getInstance().get(Calendar.DAY_OF_MONTH)+"/"+Calendar.getInstance().get(Calendar.MONTH)+"/"+Calendar.getInstance().get(Calendar.YEAR));
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		lblNewLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		panel.add(lblNewLabel);
@@ -138,10 +141,16 @@ public class AnalyseUI {
 		lblExceeding.setHorizontalAlignment(SwingConstants.LEFT);
 		panel.add(lblExceeding);
 		
-		JLabel lblNewLabel_6 = new JLabel("");
-		lblNewLabel_6.setHorizontalAlignment(SwingConstants.CENTER);
-		panel.add(lblNewLabel_6);
+		JButton btnBack = new JButton("Back");
+		panel.add(btnBack);
 		panel.add(btnNewButton_3);
+		btnBack.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Dashboard db = new Dashboard();
+				db.frame.setVisible(true);
+				frame.dispose();
+			}
+		});
 		
 	}
 	
@@ -213,7 +222,6 @@ public class AnalyseUI {
 				}
 			} 			
 			//CLOSE
-
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
