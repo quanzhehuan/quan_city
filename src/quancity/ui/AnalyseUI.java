@@ -23,13 +23,9 @@ import javax.swing.JLabel;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.Calendar;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.awt.event.ActionEvent;
 import javax.swing.SwingConstants;
 import java.awt.Font;
-import java.util.Date;
-import java.text.SimpleDateFormat;
 
 public class AnalyseUI {
 

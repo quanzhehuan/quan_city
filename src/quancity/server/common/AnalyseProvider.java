@@ -39,7 +39,7 @@ public class AnalyseProvider {
 			String sql =  "select (SELECT COUNT(*) AS CountStation from tblstation WHERE sIdCity ="+ id +") AS CountStation"
 					+ ",(SELECT COUNT(*) AS CountSensor from tblsensorair) AS CountSensor"
 					+ ",(SELECT COUNT(*) AS CountBollard from tblvehiculesensor) AS CountBollard"
-					+ ",(SELECT distance AS CountDistance from tbldistance WHERE distance > 0) AS CountDistance"
+					+ ",(SELECT distance AS CountDistance from tbldistance) AS CountDistance"
 					+ ",(SELECT COUNT(*) AS CountRatePollution from tblalert where isAlert = 1)*100/6 AS CountRatePollution"
 					+ ",(SELECT COUNT(*) AS CountExceeding from tblalert where isAlert = 1)*100/6 AS CountExceeding"
 					;
@@ -59,7 +59,7 @@ public class AnalyseProvider {
 					resItem.put("CountDistance",  rs.getInt("CountDistance"));
 					resItem.put("CountRatePollution",  rs.getInt("CountRatePollution"));
 					resItem.put("CountExceeding",  rs.getInt("CountExceeding"));
-					                   
+					
 					cityAll.put(resItem);                    
 				}	while(rs.next());
 				return new ApiResponse(true, cityAll, "Success");

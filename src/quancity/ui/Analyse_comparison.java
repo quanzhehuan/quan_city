@@ -22,6 +22,7 @@ import quancity.client.common.SendPackage;
 import javax.swing.JLabel;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -32,11 +33,9 @@ import java.awt.Font;
 public class Analyse_comparison{
 
 	public JFrame frame;
-	private JTextField textField;
-	private JLabel label;
 	Client client;
 	private int cityID;
-	private String date;
+	private Date date;
 	
 	/**
 	 * Create the application.
@@ -69,33 +68,44 @@ public class Analyse_comparison{
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		panel.add(lblNewLabel);
 		
-		textField = new JTextField();
-		textField.setHorizontalAlignment(SwingConstants.CENTER);
-		textField.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		panel.add(textField);
-		textField.setColumns(10);
-		System.out.println(textField.getText());
-		
 		JButton btnNewButton_3 = new JButton("Continue");
 		btnNewButton_3.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		
 		btnNewButton_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				date = textField.getText();
+				date = new Date();//textField.getText();
 				Analyse_comparison_1 c1 = new Analyse_comparison_1(client, cityID, date);
 				c1.getJFrame().setVisible(true);
 			}
 		});
 		
-		label = new JLabel("");
+		JLabel label = new JLabel("");
 		panel.add(label);
+		
+		JLabel lblNewLabel_1 = new JLabel("");
+		panel.add(lblNewLabel_1);
+		
+		JLabel label_1 = new JLabel("");
+		panel.add(label_1);
+		
+		JLabel label_2 = new JLabel("");
+		panel.add(label_2);
+		
+		JButton btnBack = new JButton("Back");
+		btnBack.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		panel.add(btnBack);
 		panel.add(btnNewButton_3);
+		btnBack.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				AnalyseUI anUI = new AnalyseUI(client, cityID);
+				anUI.frame.setVisible(true);
+				frame.dispose();
+			}
+		});
 		
 	}
 
 	public JFrame getJFrame() {
 		return frame;
 	}
-	
-	
-	
 }

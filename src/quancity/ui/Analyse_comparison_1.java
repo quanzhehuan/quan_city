@@ -42,7 +42,7 @@ import java.util.HashMap;
 		private JLabel lblDistance;
 		private JLabel lblExceeding;
 		private JLabel lblRatePollution;
-		private String date;
+		private Date date;
 		JLabel label_3;
 		JLabel label_5;
 		JLabel label_7;
@@ -54,7 +54,7 @@ import java.util.HashMap;
 		 * Create the application.
 		 */
 		
-		public Analyse_comparison_1(Client client, int cID, String date) {
+		public Analyse_comparison_1(Client client, int cID, Date date) {
 			this.client = client;
 			this.cityID = cID;
 			this.date = date;
@@ -159,7 +159,7 @@ import java.util.HashMap;
 			label_1.setFont(new Font("Tahoma", Font.PLAIN, 16));
 			panel.add(label_1);
 			
-			JLabel lblNewLabel_6 = new JLabel(date);
+			JLabel lblNewLabel_6 = new JLabel(date.toString());
 			lblNewLabel_6.setFont(new Font("Tahoma", Font.PLAIN, 16));
 			lblNewLabel_6.setHorizontalAlignment(SwingConstants.LEFT);
 			panel.add(lblNewLabel_6);
