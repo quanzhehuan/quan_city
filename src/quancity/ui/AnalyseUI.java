@@ -73,7 +73,7 @@ public class AnalyseUI {
 		label.setHorizontalAlignment(SwingConstants.RIGHT);
 		panel.add(label);
 		
-		JLabel lblNewLabel = new JLabel(Calendar.getInstance().get(Calendar.DAY_OF_MONTH)+"/"+Calendar.getInstance().get(Calendar.MONTH)+"/"+Calendar.getInstance().get(Calendar.YEAR));
+		JLabel lblNewLabel = new JLabel(Calendar.getInstance().get(Calendar.DAY_OF_MONTH)+"-"+ (Calendar.getInstance().get(Calendar.MONTH)+1) +"-"+Calendar.getInstance().get(Calendar.YEAR));
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		lblNewLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		panel.add(lblNewLabel);
@@ -136,6 +136,13 @@ public class AnalyseUI {
 		lblExceeding = new JLabel("");
 		lblExceeding.setHorizontalAlignment(SwingConstants.LEFT);
 		panel.add(lblExceeding);
+		
+		JLabel lblOtherDate = new JLabel("Other date :");
+		lblOtherDate.setHorizontalAlignment(SwingConstants.RIGHT);
+		panel.add(lblOtherDate);
+		
+		JButton btnSelect = new JButton("Select");
+		panel.add(btnSelect);
 		
 		JButton btnBack = new JButton("Back");
 		panel.add(btnBack);
