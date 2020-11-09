@@ -94,10 +94,19 @@ public class Analyse_comparison{
 			}
 		});
 		
+		JLabel lblPleaseType = new JLabel("Please type 2 dates (dd-MM-yyyy) :");
+		lblPleaseType.setHorizontalAlignment(SwingConstants.LEFT);
+		lblPleaseType.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		panel.add(lblPleaseType);
+		
+		JLabel label_3 = new JLabel("");
+		panel.add(label_3);
+		
 		txtDate = new JTextField();
 		txtDate.setFont(new Font("Tahoma", Font.ITALIC, 16));
 		txtDate.setHorizontalAlignment(SwingConstants.CENTER);
-		txtDate.setText("Date 1");
+		txtDate.setText(Calendar.getInstance().get(Calendar.DAY_OF_MONTH) + "-"
+				+ (Calendar.getInstance().get(Calendar.MONTH) + 1) + "-" + Calendar.getInstance().get(Calendar.YEAR));
 		panel.add(txtDate);
 		txtDate.setColumns(10);
 		

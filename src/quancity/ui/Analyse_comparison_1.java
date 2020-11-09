@@ -24,6 +24,7 @@ package quancity.ui;
 	import java.awt.event.ActionListener;
 	import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 	import java.util.Iterator;
@@ -86,7 +87,8 @@ import java.util.HashMap;
 			panel.add(label);
 			
 			JLabel lblNewLabel = new JLabel("");
-			lblNewLabel.setText("2020-07-03");
+			lblNewLabel.setText(Calendar.getInstance().get(Calendar.DAY_OF_MONTH) + "-"
+					+ (Calendar.getInstance().get(Calendar.MONTH) + 1) + "-" + Calendar.getInstance().get(Calendar.YEAR));
 			lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 			lblNewLabel.setHorizontalAlignment(SwingConstants.LEFT);
 			panel.add(lblNewLabel);
@@ -159,7 +161,7 @@ import java.util.HashMap;
 			label_1.setFont(new Font("Tahoma", Font.PLAIN, 16));
 			panel.add(label_1);
 			
-			JLabel lblNewLabel_6 = new JLabel(date.toString());
+			JLabel lblNewLabel_6 = new JLabel("07-11-2020");
 			lblNewLabel_6.setFont(new Font("Tahoma", Font.PLAIN, 16));
 			lblNewLabel_6.setHorizontalAlignment(SwingConstants.LEFT);
 			panel.add(lblNewLabel_6);
