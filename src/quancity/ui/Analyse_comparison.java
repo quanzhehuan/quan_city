@@ -101,12 +101,14 @@ public class Analyse_comparison{
 					Analyse_comparison_1 c1 = new Analyse_comparison_1(client, cityID, date1, date2);
 					c1.getJFrame().setVisible(true);
 				} else {
-					while(!isValidDate(date1))
+					while(!isValidDate(date1)) {
+						txtDate1.setText(date1);
 						date1 = JOptionPane.showInputDialog("Your first date is not correct. Please input FIRST DATE (yyyy-mm-dd): ");
-					while(!isValidDate(date2))
+					}
+					while(!isValidDate(date2)) {
+						txtDate2.setText(date2);
 						date2 = JOptionPane.showInputDialog("Your second date is not correct. Please input SECOND DATE (yyyy-mm-dd): ");
-					txtDate1.setText(date1);
-					txtDate2.setText(date2);
+					}
 					Analyse_comparison_1 c1 = new Analyse_comparison_1(client, cityID, date1, date2);
 					c1.getJFrame().setVisible(true);
 				}

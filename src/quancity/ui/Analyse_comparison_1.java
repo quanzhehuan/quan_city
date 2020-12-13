@@ -64,7 +64,7 @@ import java.util.HashMap;
 			initialize();
 			
 			getSensorInfo();
-			//getCityInfo();
+			getSensorInfo1();
 			
 			/*
 			getSensorInfo(date1);
@@ -262,23 +262,25 @@ import java.util.HashMap;
 		
 		private void setDataToField(JSONObject res) {
 			try {
-				System.out.println("++++++++++++++++++++++++" + res.getString("date"));
-				if(res.getString("date") == date1) {
-					lblSensors.setText("" + res.getInt("SensorNb"));
-					lblStations.setText("" + res.getInt("stationNb"));
-					lblBollards.setText("" + res.getInt("bollardNb"));
-					lblDistance.setText(res.getInt("distance") + " km");
-					lblRatePollution.setText(res.getDouble("pollutionRate") + "%");
-					lblExceeding.setText(res.getDouble("exceedingRate") + "%");
-				}
-				else if(res.getString("date") == date2) {
-					label_3.setText("" + res.getInt("SensorNb"));
-					label_5.setText("" + res.getInt("stationNb"));
-					label_7.setText("" + res.getInt("bollardNb"));
-					label_9.setText(res.getInt("distance") + " km");
-					label_11.setText(res.getDouble("pollutionRate") + "%");
-					label_13.setText(res.getDouble("exceedingRate") + "%");
-				}
+				lblSensors.setText("" + res.getInt("SensorNb"));
+				lblStations.setText("" + res.getInt("stationNb"));
+				lblBollards.setText("" + res.getInt("bollardNb"));
+				lblDistance.setText(res.getInt("distance") + " km");
+				lblRatePollution.setText(res.getDouble("pollutionRate") + "%");
+				lblExceeding.setText(res.getDouble("exceedingRate") + "%");
+			}catch (JSONException e) {
+					e.printStackTrace();
+			}
+		}	
+		
+		private void setDataToField1(JSONObject res) {
+			try {
+				label_3.setText("" + res.getInt("SensorNb"));
+				label_5.setText("" + res.getInt("stationNb"));
+				label_7.setText("" + res.getInt("bollardNb"));
+				label_9.setText(res.getInt("distance") + " km");
+				label_11.setText(res.getDouble("pollutionRate") + "%");
+				label_13.setText(res.getDouble("exceedingRate") + "%");
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
@@ -304,6 +306,34 @@ import java.util.HashMap;
 					if (res != null) {
 						// if success true - get data bind to table
 						setDataToField((res.getJSONArray("data")).getJSONObject(0));
+					}
+				}
+				// CLOSE
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		public void getSensorInfo1() {
+			try {
+				client.setResponseData(null);
+				JSONObject bodyItem = new JSONObject();
+				bodyItem.put("ID", "" + cityID);
+				bodyItem.put("date", date2);
+
+				SendPackage sendPa = new SendPackage();
+				sendPa.setApi(ApiEnum.ANALYSE_DATE);
+				sendPa.setBody(bodyItem);
+				client.setSendP(sendPa);
+
+				JSONObject res = null;
+				while (res == null) {
+					res = client.getResponseData();
+
+					System.out.println("wait res:" + res);
+					if (res != null) {
+						// if success true - get data bind to table
+						setDataToField1((res.getJSONArray("data")).getJSONObject(0));
 					}
 				}
 				// CLOSE
