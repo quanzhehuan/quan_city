@@ -1,5 +1,6 @@
 package quancity.dto;
 
+import java.sql.Timestamp;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -16,7 +17,7 @@ public class AnalyseInfo {
 	
 	private Client client;
 	
-	private String date;
+	private Timestamp date;
 	private int sensorNb;
 	private int stationNb;
 	private int bollardNb;
@@ -26,21 +27,21 @@ public class AnalyseInfo {
 	
 	private void createAnalyseInfo() {
 		try {
-			if (!isNotEmpty(date) && !isNotEmpty(sensorNb) && !isNotEmpty(stationNb) && !isNotEmpty(bollardNb) && !isNotEmpty(distance) && !isNotEmpty(pollutionRate) && !isNotEmpty(exceedingRate)) {
+			if (!isNotEmpty(sensorNb) && !isNotEmpty(stationNb) && !isNotEmpty(bollardNb) && !isNotEmpty(distance) && !isNotEmpty(pollutionRate) && !isNotEmpty(exceedingRate)) {
 				JOptionPane.showMessageDialog(null, "Empty data");
 				return;
 			}
-			if (isInvalidData(date) && isInvalidData(sensorNb) && isInvalidData(stationNb) && isInvalidData(bollardNb) && isInvalidData(distance) && isInvalidData(pollutionRate) && isInvalidData(exceedingRate)) {
+			if (isInvalidData(sensorNb) && isInvalidData(stationNb) && isInvalidData(bollardNb) && isInvalidData(distance) && isInvalidData(pollutionRate) && isInvalidData(exceedingRate)) {
 				JOptionPane.showMessageDialog(null, "Invalid data");
 				return;
 			}
-			if (checkLength(date) && checkLength(sensorNb) && checkLength(stationNb) && checkLength(bollardNb) && checkLength(distance) && checkLength(pollutionRate) && checkLength(exceedingRate)) {
+			if (checkLength(sensorNb) && checkLength(stationNb) && checkLength(bollardNb) && checkLength(distance) && checkLength(pollutionRate) && checkLength(exceedingRate)) {
 				JOptionPane.showMessageDialog(null, "There's no information");
 				return;
 				
 			}
 			JSONObject bodyItem = new JSONObject();
-			bodyItem.put("date", date);
+			bodyItem.put("date", date.toString());
 			bodyItem.put("sensorNb", "" + sensorNb);
 			bodyItem.put("stationNb", "" + stationNb);
 			bodyItem.put("bollardNb", "" + bollardNb);

@@ -36,6 +36,7 @@ public class AnalyseUI {
 	public JFrame frame;
 	Client client;
 	private int cID;
+	private JLabel lblDate;
 	private JLabel lbtSensors;
 	private JLabel lblStations;
 	private JLabel lblBollards;
@@ -78,11 +79,13 @@ public class AnalyseUI {
 		label.setHorizontalAlignment(SwingConstants.RIGHT);
 		panel.add(label);
 
-		JLabel lblNewLabel = new JLabel(Calendar.getInstance().get(Calendar.DAY_OF_MONTH) + "-"
-				+ (Calendar.getInstance().get(Calendar.MONTH) + 1) + "-" + Calendar.getInstance().get(Calendar.YEAR));
-		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		lblNewLabel.setHorizontalAlignment(SwingConstants.LEFT);
-		panel.add(lblNewLabel);
+		//JLabel lblNewLabel = new JLabel(Calendar.getInstance().get(Calendar.DAY_OF_MONTH) + "-"
+		//+ (Calendar.getInstance().get(Calendar.MONTH) + 1) + "-" + Calendar.getInstance().get(Calendar.YEAR));
+		
+		JLabel lblDate = new JLabel("");
+		lblDate.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lblDate.setHorizontalAlignment(SwingConstants.LEFT);
+		panel.add(lblDate);
 
 		JLabel lblNewLabel_1 = new JLabel("The number of sensors installed in the city : ");
 		lblNewLabel_1.setForeground(Color.BLACK);
@@ -150,18 +153,17 @@ public class AnalyseUI {
 		panel.add(btnSelect);
 		btnSelect.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				typedDate = JOptionPane.showInputDialog("Please input a date (dd-MM-yyyy): ");
+				typedDate = JOptionPane.showInputDialog("Please input a date (yyyy-mm-dd): ");
 				if (isValidDate(typedDate)) {
-					lblNewLabel.setText(typedDate);
-					// lbtSensors.setText(res.getString("CountSensor"));
-					lblStations.setText(String.valueOf(Integer.valueOf(lblStations.getText()) - 5));
-					lbtSensors.setText(String.valueOf(Integer.valueOf(lbtSensors.getText()) - 3));
-					lblBollards.setText(String.valueOf(Integer.valueOf(lblBollards.getText()) - 1));
+					lblDate.setText(typedDate);
+					// lbtSensors.setText(res.String("CountSensor"));
+					AnalyseUI.this.getCityInfo();
 				} else {
-					typedDate = JOptionPane.showInputDialog("Please input a date (dd-MM-yyyy): ");
+					while(!isValidDate(typedDate))
+						typedDate = JOptionPane.showInputDialog("Your input is not correct. Please input a date (yyyy-mm-dd): ");
 				}
 			}
-		});
+		});		
 
 		JButton btnBack = new JButton("Back");
 		panel.add(btnBack);
@@ -175,10 +177,10 @@ public class AnalyseUI {
 		});
 
 	}
-
+	
 	private static boolean isValidDate(String str) {
 		boolean convertSuccess = true;
-		SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 		try {
 			format.setLenient(false);
 			format.parse(str);
@@ -192,14 +194,14 @@ public class AnalyseUI {
 		return frame;
 	}
 
-	private void getCityInfo() {
+	public void getCityInfo() {
 		try {
 			client.setResponseData(null);
 			JSONObject bodyItem = new JSONObject();
 			bodyItem.put("ID", "" + cID);
 
 			SendPackage sendPa = new SendPackage();
-			sendPa.setApi(ApiEnum.ANALYSE_ONE_CITY);
+			sendPa.setApi(ApiEnum.ANALYSE_TODAY);
 			sendPa.setBody(bodyItem);
 			client.setSendP(sendPa);
 
@@ -222,13 +224,13 @@ public class AnalyseUI {
 
 	private void setDataToField(JSONObject res) {
 		try {
-			// lbtSensors.setText(res.getString("CountSensor"));
-			lblStations.setText("" + res.getInt("CountStation"));
-			lbtSensors.setText("" + res.getInt("CountSensor"));
-			lblBollards.setText("" + res.getInt("CountBollard"));
-			lblDistance.setText("" + res.getInt("CountDistance") + " km");
-			lblRatePollution.setText("" + (res.getInt("CountRatePollution") + 50) + "%");
-			lblExceeding.setText("" + (res.getInt("CountExceeding") - 50) + "%");
+			//lblDate.setText(res.get("date").toString());
+			lbtSensors.setText("" + res.getInt("SensorNb"));
+			lblStations.setText("" + res.getInt("stationNb"));
+			lblBollards.setText("" + res.getInt("bollardNb"));
+			lblDistance.setText(res.getInt("distance") + " km");
+			lblRatePollution.setText(res.getDouble("pollutionRate") + "%");
+			lblExceeding.setText(res.getDouble("exceedingRate") + "%");
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
@@ -242,7 +244,7 @@ public class AnalyseUI {
 			bodyItem.put("ID", "" + cID);
 
 			SendPackage sendPa = new SendPackage();
-			sendPa.setApi(ApiEnum.ANALYSE_ONE_CITY);
+			sendPa.setApi(ApiEnum.ANALYSE_DATE);
 			sendPa.setBody(bodyItem);
 			client.setSendP(sendPa);
 

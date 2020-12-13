@@ -125,7 +125,6 @@ public class Client extends Thread {
 					e.printStackTrace();
 				}
 
-				// safina chof lmok
 				try {
 					// System.out.println("Waiting for the result");
 					DataInputStream oos = new DataInputStream(socket.getInputStream());
@@ -133,7 +132,7 @@ public class Client extends Thread {
 					try {
 						JSONObject resd = new JSONObject(msg);
 						responseData = resd;
-						// System.out.println(resd);
+						 System.out.println("resd : "+resd);
 					} catch (JSONException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();

@@ -2,6 +2,7 @@ package quancity.server;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -17,8 +18,9 @@ import quancity.server.common.AnalyseProvider;
 import quancity.server.common.ApiResponse;
 
 public class Router {
-	// Empreinte carbone
 
+	static String date = "2020-12-01";
+	
 	// ActualData
 
 	public static String findAllActualData() {
@@ -234,38 +236,19 @@ public class Router {
 
 	// analyse
 
-	static AnalyseProvider Analyse = new AnalyseProvider();
+	static AnalyseProvider analyseProvider = new AnalyseProvider();
 
-	public static String AnalyseAirSensor(int cID) {
+	public static String AnalyseToday(int cID) {
 		try {
-			return Analyse.getInfoAnalyse(cID).toString();
+			return analyseProvider.getTodayAnalyseInfo(cID).toString();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return null;
 	}
-
-	public static String AnalyseCity(int cID) {
+	public static String AnalyseDate(int cID, String date) {
 		try {
-			return Analyse.getInfoAnalyse(cID).toString();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
-	
-	public static String AnalyseBollard(int cID) {
-		try {
-			return Analyse.getInfoAnalyse(cID).toString();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
-	
-	public static String AnalyseDistance(int cID) {
-		try {
-			return Analyse.getInfoAnalyse(cID).toString();
+			return analyseProvider.getAnalyseInfoByDate(cID, date).toString();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -364,29 +347,13 @@ public class Router {
 				deleteVehiculeSensorById((int) body.getInt("id"), (int) body.getInt("alert_id"));
 				return "DELETED";
 
-			case "ANALYSE_AIR_SENSOR_NUMBER":
+			case "ANALYSE_TODAY":
 				body = input.getJSONObject("body");
-				return AnalyseCity((int) body.getInt("ID"));
-
-			case "ANALYSE_ONE_CITY":
+				return AnalyseToday((int) body.getInt("ID"));
+			
+			case "ANALYSE_DATE":
 				body = input.getJSONObject("body");
-				return AnalyseCity((int) body.getInt("ID"));
-				
-			case "ANALYSE_BOLLARD_NUMBER":
-				body = input.getJSONObject("body");
-				return AnalyseCity((int) body.getInt("ID"));
-				
-			case "ANALYSE_DISTANCE":
-				body = input.getJSONObject("body");
-				return AnalyseCity((int) body.getInt("ID"));
-				
-			case "ANALYSE_RATE_POLLUTION":
-				body = input.getJSONObject("body");
-				return AnalyseCity((int) body.getInt("ID"));
-				
-			case "ANALYSE_EXCEEDING":
-				body = input.getJSONObject("body");
-				return AnalyseCity((int) body.getInt("ID"));
+				return AnalyseDate((int)body.getInt("ID"), date);
 
 			// threshold
 			case "THRESHOLD_CREATE":
@@ -407,12 +374,10 @@ public class Router {
 				return new ApiResponse(false, null, "Not found API").toString();
 			}
 		} catch (JSONException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			try {
 				return new ApiResponse(false, null, e.getMessage()).toString();
 			} catch (JSONException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 
 				return null;
