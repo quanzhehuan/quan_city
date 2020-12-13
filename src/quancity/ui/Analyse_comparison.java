@@ -91,6 +91,28 @@ public class Analyse_comparison{
 		frmCompareBetween.getContentPane().add(panel);
 		panel.setLayout(new GridLayout(0, 2, 0, 8));
 		
+		JLabel lblPleaseType = new JLabel("Please type 2 dates (yyyy-mm-dd) :");
+		lblPleaseType.setHorizontalAlignment(SwingConstants.LEFT);
+		lblPleaseType.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		panel.add(lblPleaseType);
+		
+		JLabel label_3 = new JLabel("");
+		panel.add(label_3);
+		
+		txtDate1 = new JTextField();
+		txtDate1.setFont(new Font("Tahoma", Font.ITALIC, 16));
+		txtDate1.setHorizontalAlignment(SwingConstants.CENTER);
+		txtDate1.setText(Calendar.getInstance().get(Calendar.YEAR) + "-" + (Calendar.getInstance().get(Calendar.MONTH) + 1) + "-"  + Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
+		panel.add(txtDate1);
+		txtDate1.setColumns(10);
+		
+		txtDate2 = new JTextField();
+		txtDate2.setFont(new Font("Tahoma", Font.ITALIC, 16));
+		txtDate2.setHorizontalAlignment(SwingConstants.CENTER);
+		txtDate2.setText("Second Date");
+		panel.add(txtDate2);
+		txtDate2.setColumns(10);
+		
 		JButton btnNewButton_3 = new JButton("Continue");
 		btnNewButton_3.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		btnNewButton_3.addActionListener(new ActionListener() {
@@ -115,27 +137,9 @@ public class Analyse_comparison{
 			}
 		});
 		
-		JLabel lblPleaseType = new JLabel("Please type 2 dates (yyyy-mm-dd) :");
-		lblPleaseType.setHorizontalAlignment(SwingConstants.LEFT);
-		lblPleaseType.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		panel.add(lblPleaseType);
-		
-		JLabel label_3 = new JLabel("");
-		panel.add(label_3);
-		
-		txtDate1 = new JTextField();
-		txtDate1.setFont(new Font("Tahoma", Font.ITALIC, 16));
-		txtDate1.setHorizontalAlignment(SwingConstants.CENTER);
-		txtDate1.setText(Calendar.getInstance().get(Calendar.YEAR) + "-" + (Calendar.getInstance().get(Calendar.MONTH) + 1) + "-"  + Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
-		panel.add(txtDate1);
-		txtDate1.setColumns(10);
-		
-		txtDate2 = new JTextField();
-		txtDate2.setFont(new Font("Tahoma", Font.ITALIC, 16));
-		txtDate2.setHorizontalAlignment(SwingConstants.CENTER);
-		txtDate2.setText("Second Date");
-		panel.add(txtDate2);
-		txtDate2.setColumns(10);
+		JLabel label = new JLabel("");
+		panel.add(label);
+		panel.add(btnNewButton_3);
 		JLabel lblIfYouWant = new JLabel("To check a period, please type 2 dates here : ");
 		lblIfYouWant.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		lblIfYouWant.setHorizontalAlignment(SwingConstants.LEFT);
@@ -158,10 +162,44 @@ public class Analyse_comparison{
 		txtDate4.setColumns(10);
 		panel.add(txtDate4);
 		
+		JLabel label_1 = new JLabel("");
+		panel.add(label_1);
+		
+		JButton btnPeriod = new JButton("Continue");
+		btnPeriod.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		panel.add(btnPeriod);
+		btnPeriod.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				date3 = txtDate3.getText();
+				date4 = txtDate4.getText();
+				if (isValidDate(date3) && isValidDate(date4)) {
+					Analyse_comparison_2 c1 = new Analyse_comparison_2(client, cityID, date3, date4);
+					c1.getJFrame().setVisible(true);
+				} else {
+					while(!isValidDate(date3)) {
+						txtDate3.setText(date3);
+						date3 = JOptionPane.showInputDialog("Your first date is not correct. Please input FIRST DATE (yyyy-mm-dd): ");
+					}
+					while(!isValidDate(date4)) {
+						txtDate4.setText(date4);
+						date4 = JOptionPane.showInputDialog("Your second date is not correct. Please input SECOND DATE (yyyy-mm-dd): ");
+					}
+					Analyse_comparison_2 c1 = new Analyse_comparison_2(client, cityID, date3, date4);
+					c1.getJFrame().setVisible(true);
+				}
+			}
+		});
+		
+		
+		
+		
+		
 		JButton btnBack = new JButton("Back");
 		btnBack.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		panel.add(btnBack);
-		panel.add(btnNewButton_3);
+		
+		JLabel label_2 = new JLabel("");
+		panel.add(label_2);
 		btnBack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				AnalyseUI anUI = new AnalyseUI(client, cityID);
