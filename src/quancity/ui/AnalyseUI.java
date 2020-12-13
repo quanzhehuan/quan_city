@@ -224,6 +224,7 @@ public class AnalyseUI {
 
 	private void setDataToField(JSONObject res) {
 		try {
+			//Prob
 			//lblDate.setText(res.get("date").toString());
 			lbtSensors.setText("" + res.getInt("SensorNb"));
 			lblStations.setText("" + res.getInt("stationNb"));
