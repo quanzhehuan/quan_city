@@ -14,7 +14,7 @@ public class ClientMain {
 	static Client client;
 
 	public static void main(String args[]) {
-		client = new Client("172.31.240.11", 3000);
+		client = new Client("172.31.240.16", 3000);
 		client.start();
 		// System.out.println("call view");
 		CityList windowCityList = new CityList(client);

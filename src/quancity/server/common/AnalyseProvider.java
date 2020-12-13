@@ -78,13 +78,13 @@ public class AnalyseProvider {
 	
 	public static ApiResponse getAnalyseInfoByDate(int cID, String date) {
 		try {
-			String sql =  "SELECT (SELECT date FROM AnalyseInfo WHERE date = '" + date.toString() + "') AS date"
-					+ ",(SELECT SensorNb FROM AnalyseInfo WHERE date = '" + date.toString() + "') AS SensorNb"
-					+ ",(SELECT stationNb FROM AnalyseInfo WHERE date = '" + date.toString() + "') AS stationNb"
-					+ ",(SELECT bollardNb FROM AnalyseInfo WHERE date = '" + date.toString() + "') AS bollardNb"
-					+ ",(SELECT distance FROM AnalyseInfo WHERE date = '" + date.toString() + "') AS distance"
-					+ ",(SELECT pollutionRate FROM AnalyseInfo WHERE date = '" + date.toString() + "') AS pollutionRate"
-					+ ",(SELECT exceedingRate FROM AnalyseInfo WHERE date = '" + date.toString() + "') AS exceedingRate"
+			String sql =  "SELECT (SELECT date FROM AnalyseInfo WHERE date = '" + date + "') AS date"
+					+ ",(SELECT SensorNb FROM AnalyseInfo WHERE date = '" + date + "') AS SensorNb"
+					+ ",(SELECT stationNb FROM AnalyseInfo WHERE date = '" + date + "') AS stationNb"
+					+ ",(SELECT bollardNb FROM AnalyseInfo WHERE date = '" + date + "') AS bollardNb"
+					+ ",(SELECT distance FROM AnalyseInfo WHERE date = '" + date + "') AS distance"
+					+ ",(SELECT pollutionRate FROM AnalyseInfo WHERE date = '" + date + "') AS pollutionRate"
+					+ ",(SELECT exceedingRate FROM AnalyseInfo WHERE date = '" + date + "') AS exceedingRate"
 					;
 			st =  conn.createStatement();
 			ResultSet rs = st.executeQuery(sql);        	

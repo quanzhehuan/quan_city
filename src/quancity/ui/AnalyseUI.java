@@ -27,6 +27,7 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.awt.event.ActionEvent;
 import javax.swing.SwingConstants;
 import java.awt.Font;
@@ -36,6 +37,7 @@ public class AnalyseUI {
 	public JFrame frame;
 	Client client;
 	private int cID;
+	private String date;
 	private JLabel lblDate;
 	private JLabel lbtSensors;
 	private JLabel lblStations;
@@ -52,6 +54,9 @@ public class AnalyseUI {
 	public AnalyseUI(Client client, int cID) {
 		this.client = client;
 		this.cID = cID;
+		Date datedate = new Date();
+		SimpleDateFormat dateFormat=new SimpleDateFormat("YYYY-MM-dd");
+		this.date = dateFormat.format(datedate);
 		initialize();
 
 		getSensorInfo();
@@ -82,7 +87,8 @@ public class AnalyseUI {
 		//JLabel lblNewLabel = new JLabel(Calendar.getInstance().get(Calendar.DAY_OF_MONTH) + "-"
 		//+ (Calendar.getInstance().get(Calendar.MONTH) + 1) + "-" + Calendar.getInstance().get(Calendar.YEAR));
 		
-		JLabel lblDate = new JLabel("");
+		
+		JLabel lblDate = new JLabel(date);
 		lblDate.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		lblDate.setHorizontalAlignment(SwingConstants.LEFT);
 		panel.add(lblDate);
@@ -157,10 +163,15 @@ public class AnalyseUI {
 				if (isValidDate(typedDate)) {
 					lblDate.setText(typedDate);
 					// lbtSensors.setText(res.String("CountSensor"));
-					AnalyseUI.this.getCityInfo();
+					date = typedDate;
+					AnalyseUI.this.getSensorInfo();
+					//AnalyseUI.this.getCityInfo();
 				} else {
 					while(!isValidDate(typedDate))
 						typedDate = JOptionPane.showInputDialog("Your input is not correct. Please input a date (yyyy-mm-dd): ");
+					date = typedDate;
+					AnalyseUI.this.getSensorInfo();
+					//AnalyseUI.this.getCityInfo();
 				}
 			}
 		});		
@@ -199,6 +210,7 @@ public class AnalyseUI {
 			client.setResponseData(null);
 			JSONObject bodyItem = new JSONObject();
 			bodyItem.put("ID", "" + cID);
+			bodyItem.put("date", date);
 
 			SendPackage sendPa = new SendPackage();
 			sendPa.setApi(ApiEnum.ANALYSE_TODAY);
@@ -235,14 +247,14 @@ public class AnalyseUI {
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
-
 	}
 
-	private void getSensorInfo() {
+	public void getSensorInfo() {
 		try {
 			client.setResponseData(null);
 			JSONObject bodyItem = new JSONObject();
 			bodyItem.put("ID", "" + cID);
+			bodyItem.put("date", date);
 
 			SendPackage sendPa = new SendPackage();
 			sendPa.setApi(ApiEnum.ANALYSE_DATE);

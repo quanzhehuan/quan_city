@@ -18,8 +18,6 @@ import quancity.server.common.AnalyseProvider;
 import quancity.server.common.ApiResponse;
 
 public class Router {
-
-	static String date = "2020-12-01";
 	
 	// ActualData
 
@@ -353,7 +351,7 @@ public class Router {
 			
 			case "ANALYSE_DATE":
 				body = input.getJSONObject("body");
-				return AnalyseDate((int)body.getInt("ID"), date);
+				return AnalyseDate((int)body.getInt("ID"), body.getString("date"));
 
 			// threshold
 			case "THRESHOLD_CREATE":
