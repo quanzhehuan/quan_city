@@ -37,13 +37,14 @@ import java.util.HashMap;
 		public JFrame frame;
 		Client client;
 		private int cityID;
-		private JLabel lbtSensors;
+		private JLabel lblSensors;
 		private JLabel lblStations ;
 		private JLabel lblBollards;
 		private JLabel lblDistance;
 		private JLabel lblExceeding;
 		private JLabel lblRatePollution;
-		private Date date;
+		private String date1;
+		private String date2;
 		JLabel label_3;
 		JLabel label_5;
 		JLabel label_7;
@@ -55,14 +56,22 @@ import java.util.HashMap;
 		 * Create the application.
 		 */
 		
-		public Analyse_comparison_1(Client client, int cID, Date date) {
+		public Analyse_comparison_1(Client client, int cID, String date1, String date2) {
 			this.client = client;
 			this.cityID = cID;
-			this.date = date;
+			this.date1 = date1;
+			this.date2 = date2;
 			initialize();
 			
 			getSensorInfo();
-			getCityInfo();
+			//getCityInfo();
+			
+			/*
+			getSensorInfo(date1);
+			getCityInfo(date1);
+			getSensorInfo(date2);
+			getCityInfo(date2);
+			*/
 		}
 		
 		/**
@@ -87,8 +96,7 @@ import java.util.HashMap;
 			panel.add(label);
 			
 			JLabel lblNewLabel = new JLabel("");
-			lblNewLabel.setText(Calendar.getInstance().get(Calendar.DAY_OF_MONTH) + "-"
-					+ (Calendar.getInstance().get(Calendar.MONTH) + 1) + "-" + Calendar.getInstance().get(Calendar.YEAR));
+			lblNewLabel.setText(date1);
 			lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 			lblNewLabel.setHorizontalAlignment(SwingConstants.LEFT);
 			panel.add(lblNewLabel);
@@ -98,9 +106,9 @@ import java.util.HashMap;
 			lblNewLabel_1.setHorizontalAlignment(SwingConstants.RIGHT);
 			panel.add(lblNewLabel_1);
 			
-			lbtSensors = new JLabel();
-			lbtSensors.setHorizontalAlignment(SwingConstants.LEFT);
-			panel.add(lbtSensors);
+			lblSensors = new JLabel();
+			lblSensors.setHorizontalAlignment(SwingConstants.LEFT);
+			panel.add(lblSensors);
 			
 			JLabel lblTheNumberOf_1 = new JLabel("The number of Stations : ");
 			lblTheNumberOf_1.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -161,7 +169,7 @@ import java.util.HashMap;
 			label_1.setFont(new Font("Tahoma", Font.PLAIN, 16));
 			panel.add(label_1);
 			
-			JLabel lblNewLabel_6 = new JLabel("07-11-2020");
+			JLabel lblNewLabel_6 = new JLabel(date2);
 			lblNewLabel_6.setFont(new Font("Tahoma", Font.PLAIN, 16));
 			lblNewLabel_6.setHorizontalAlignment(SwingConstants.LEFT);
 			panel.add(lblNewLabel_6);
@@ -223,79 +231,84 @@ import java.util.HashMap;
 			return frame;
 		}
 		
-		private void getCityInfo() {
+		public void getCityInfo() {
 			try {
-				client.setResponseData(null);		
+				client.setResponseData(null);
 				JSONObject bodyItem = new JSONObject();
-				bodyItem.put("ID", "" +cityID);
+				bodyItem.put("ID", "" + cityID);
+				bodyItem.put("date", date1);
 
 				SendPackage sendPa = new SendPackage();
-				sendPa.setApi(ApiEnum.ANALYSE_ONE_CITY);		
+				sendPa.setApi(ApiEnum.ANALYSE_TODAY);
 				sendPa.setBody(bodyItem);
 				client.setSendP(sendPa);
 
 				JSONObject res = null;
-				while(res == null) {
+				while (res == null) {
 					res = client.getResponseData();
 
-					System.out.println("wait res:"+res);
-					if(res!= null) {
-						// if success true - get data bind to table 
+					System.out.println("wait res:" + res);
+					if (res != null) {
+						// if success true - get data bind to table
 						setDataToField((res.getJSONArray("data")).getJSONObject(0));
 					}
-				} 			
-				//CLOSE
+				}
+				// CLOSE
 
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
 		}
+		
 		private void setDataToField(JSONObject res) {
 			try {
-				//lbtSensors.setText(res.getString("CountSensor"));
-				lblStations.setText(""+ res.getInt("CountStation"));
-				lbtSensors.setText("" + res.getInt("CountSensor"));
-				lblBollards.setText("" + res.getInt("CountBollard"));
-				lblDistance.setText("" + res.getInt("CountDistance") + " km");
-				lblRatePollution.setText("" + (res.getInt("CountRatePollution") + 50) + "%");
-				lblExceeding.setText("" + (res.getInt("CountExceeding") - 50) + "%");
-				label_3.setText(""+ (res.getInt("CountStation")-(int)Math.random()*2));
-				label_5.setText(""+ (res.getInt("CountSensor")-(int)Math.random()*3));
-				label_7.setText(""+ (res.getInt("CountBollard")-(int)Math.random()*2));
-				label_9.setText(""+ (res.getInt("CountDistance")+14230) + " km");
-				label_11.setText("" + ((res.getInt("CountRatePollution") - (Math.random()*40)) + 50) + "%");
-				label_13.setText("" + ((res.getInt("CountExceeding") - (Math.random()*40)) - 50) + "%");
-				
+				System.out.println("++++++++++++++++++++++++" + res.getString("date"));
+				if(res.getString("date") == date1) {
+					lblSensors.setText("" + res.getInt("SensorNb"));
+					lblStations.setText("" + res.getInt("stationNb"));
+					lblBollards.setText("" + res.getInt("bollardNb"));
+					lblDistance.setText(res.getInt("distance") + " km");
+					lblRatePollution.setText(res.getDouble("pollutionRate") + "%");
+					lblExceeding.setText(res.getDouble("exceedingRate") + "%");
+				}
+				else if(res.getString("date") == date2) {
+					label_3.setText("" + res.getInt("SensorNb"));
+					label_5.setText("" + res.getInt("stationNb"));
+					label_7.setText("" + res.getInt("bollardNb"));
+					label_9.setText(res.getInt("distance") + " km");
+					label_11.setText(res.getDouble("pollutionRate") + "%");
+					label_13.setText(res.getDouble("exceedingRate") + "%");
+				}
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
 			
 		}	
-		private void getSensorInfo() {
+		public void getSensorInfo() {
 			try {
-				client.setResponseData(null);		
+				client.setResponseData(null);
 				JSONObject bodyItem = new JSONObject();
-				bodyItem.put("ID", "" +cityID);
+				bodyItem.put("ID", "" + cityID);
+				bodyItem.put("date", date1);
 
 				SendPackage sendPa = new SendPackage();
-				sendPa.setApi(ApiEnum.ANALYSE_ONE_CITY);		
+				sendPa.setApi(ApiEnum.ANALYSE_DATE);
 				sendPa.setBody(bodyItem);
 				client.setSendP(sendPa);
 
 				JSONObject res = null;
-				while(res == null) {
+				while (res == null) {
 					res = client.getResponseData();
 
-					System.out.println("wait res:"+res);
-					if(res!= null) {
-						// if success true - get data bind to table 
+					System.out.println("wait res:" + res);
+					if (res != null) {
+						// if success true - get data bind to table
 						setDataToField((res.getJSONArray("data")).getJSONObject(0));
 					}
-				} 			
-				//CLOSE
-
+				}
+				// CLOSE
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
-		}	
+		}
 }

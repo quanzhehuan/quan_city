@@ -59,7 +59,7 @@ public class AnalyseUI {
 		this.date = dateFormat.format(datedate);
 		initialize();
 
-		getSensorInfo();
+		//getSensorInfo();
 		getCityInfo();
 	}
 
@@ -164,13 +164,13 @@ public class AnalyseUI {
 					lblDate.setText(typedDate);
 					// lbtSensors.setText(res.String("CountSensor"));
 					date = typedDate;
-					AnalyseUI.this.getSensorInfo();
+					getSensorInfo();
 					//AnalyseUI.this.getCityInfo();
 				} else {
 					while(!isValidDate(typedDate))
 						typedDate = JOptionPane.showInputDialog("Your input is not correct. Please input a date (yyyy-mm-dd): ");
 					date = typedDate;
-					AnalyseUI.this.getSensorInfo();
+					getSensorInfo();
 					//AnalyseUI.this.getCityInfo();
 				}
 			}
@@ -213,7 +213,7 @@ public class AnalyseUI {
 			bodyItem.put("date", date);
 
 			SendPackage sendPa = new SendPackage();
-			sendPa.setApi(ApiEnum.ANALYSE_TODAY);
+			sendPa.setApi(ApiEnum.ANALYSE_DATE);
 			sendPa.setBody(bodyItem);
 			client.setSendP(sendPa);
 
@@ -236,8 +236,6 @@ public class AnalyseUI {
 
 	private void setDataToField(JSONObject res) {
 		try {
-			//Prob
-			//lblDate.setText(res.get("date").toString());
 			lbtSensors.setText("" + res.getInt("SensorNb"));
 			lblStations.setText("" + res.getInt("stationNb"));
 			lblBollards.setText("" + res.getInt("bollardNb"));

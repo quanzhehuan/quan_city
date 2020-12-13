@@ -25,6 +25,8 @@ import javax.swing.JOptionPane;
 
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -50,12 +52,17 @@ import java.awt.SystemColor;
 
 public class Analyse_comparison{
 
-	public JFrame frame;
+	public JFrame frmCompareBetween;
 	Client client;
 	private int cityID;
-	private Date date;
-	private JTextField txtDate;
-	private JTextField txtDate_1;
+	private String date1;
+	private String date2;
+	private String date3;
+	private String date4;
+	private JTextField txtDate1;
+	private JTextField txtDate2;
+	private JTextField txtDate3;
+	private JTextField txtDate4;
 	
 	/**
 	 * Create the application.
@@ -71,30 +78,42 @@ public class Analyse_comparison{
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frame = new JFrame();
-		frame.setBounds(100, 100, 700, 500);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(null);
+		frmCompareBetween = new JFrame();
+		frmCompareBetween.setTitle("Compare between 2 dates");
+		frmCompareBetween.setBounds(100, 100, 700, 500);
+		frmCompareBetween.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmCompareBetween.getContentPane().setLayout(null);
 
 		JPanel panel = new JPanel();
 		panel.setLayout(null);
 		panel.setBackground(Color.WHITE);
 		panel.setBounds(10, 11, 664, 439);
-		frame.getContentPane().add(panel);
+		frmCompareBetween.getContentPane().add(panel);
 		panel.setLayout(new GridLayout(0, 2, 0, 8));
 		
 		JButton btnNewButton_3 = new JButton("Continue");
 		btnNewButton_3.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		
 		btnNewButton_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				date = new Date();//textField.getText();
-				Analyse_comparison_1 c1 = new Analyse_comparison_1(client, cityID, date);
-				c1.getJFrame().setVisible(true);
+				date1 = txtDate1.getText();
+				date2 = txtDate2.getText();
+				if (isValidDate(date1) && isValidDate(date2)) {
+					Analyse_comparison_1 c1 = new Analyse_comparison_1(client, cityID, date1, date2);
+					c1.getJFrame().setVisible(true);
+				} else {
+					while(!isValidDate(date1))
+						date1 = JOptionPane.showInputDialog("Your first date is not correct. Please input FIRST DATE (yyyy-mm-dd): ");
+					while(!isValidDate(date2))
+						date2 = JOptionPane.showInputDialog("Your second date is not correct. Please input SECOND DATE (yyyy-mm-dd): ");
+					txtDate1.setText(date1);
+					txtDate2.setText(date2);
+					Analyse_comparison_1 c1 = new Analyse_comparison_1(client, cityID, date1, date2);
+					c1.getJFrame().setVisible(true);
+				}
 			}
 		});
 		
-		JLabel lblPleaseType = new JLabel("Please type 2 dates (dd-MM-yyyy) :");
+		JLabel lblPleaseType = new JLabel("Please type 2 dates (yyyy-mm-dd) :");
 		lblPleaseType.setHorizontalAlignment(SwingConstants.LEFT);
 		lblPleaseType.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		panel.add(lblPleaseType);
@@ -102,31 +121,40 @@ public class Analyse_comparison{
 		JLabel label_3 = new JLabel("");
 		panel.add(label_3);
 		
-		txtDate = new JTextField();
-		txtDate.setFont(new Font("Tahoma", Font.ITALIC, 16));
-		txtDate.setHorizontalAlignment(SwingConstants.CENTER);
-		txtDate.setText(Calendar.getInstance().get(Calendar.DAY_OF_MONTH) + "-"
-				+ (Calendar.getInstance().get(Calendar.MONTH) + 1) + "-" + Calendar.getInstance().get(Calendar.YEAR));
-		panel.add(txtDate);
-		txtDate.setColumns(10);
+		txtDate1 = new JTextField();
+		txtDate1.setFont(new Font("Tahoma", Font.ITALIC, 16));
+		txtDate1.setHorizontalAlignment(SwingConstants.CENTER);
+		txtDate1.setText(Calendar.getInstance().get(Calendar.YEAR) + "-" + (Calendar.getInstance().get(Calendar.MONTH) + 1) + "-"  + Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
+		panel.add(txtDate1);
+		txtDate1.setColumns(10);
 		
-		txtDate_1 = new JTextField();
-		txtDate_1.setFont(new Font("Tahoma", Font.ITALIC, 16));
-		txtDate_1.setHorizontalAlignment(SwingConstants.CENTER);
-		txtDate_1.setText("Date 2");
-		panel.add(txtDate_1);
-		txtDate_1.setColumns(10);
-		JLabel label = new JLabel("");
-		panel.add(label);
+		txtDate2 = new JTextField();
+		txtDate2.setFont(new Font("Tahoma", Font.ITALIC, 16));
+		txtDate2.setHorizontalAlignment(SwingConstants.CENTER);
+		txtDate2.setText("Second Date");
+		panel.add(txtDate2);
+		txtDate2.setColumns(10);
+		JLabel lblIfYouWant = new JLabel("To check a period, please type 2 dates here : ");
+		lblIfYouWant.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblIfYouWant.setHorizontalAlignment(SwingConstants.LEFT);
+		panel.add(lblIfYouWant);
 		
 		JLabel lblNewLabel_1 = new JLabel("");
 		panel.add(lblNewLabel_1);
 		
-		JLabel label_1 = new JLabel("");
-		panel.add(label_1);
+		txtDate3 = new JTextField();
+		panel.add(txtDate3);
+		txtDate3.setText("First Date");
+		txtDate3.setHorizontalAlignment(SwingConstants.CENTER);
+		txtDate3.setFont(new Font("Tahoma", Font.ITALIC, 16));
+		txtDate3.setColumns(10);
 		
-		JLabel label_2 = new JLabel("");
-		panel.add(label_2);
+		txtDate4 = new JTextField();
+		txtDate4.setText("Second Date");
+		txtDate4.setHorizontalAlignment(SwingConstants.CENTER);
+		txtDate4.setFont(new Font("Tahoma", Font.ITALIC, 16));
+		txtDate4.setColumns(10);
+		panel.add(txtDate4);
 		
 		JButton btnBack = new JButton("Back");
 		btnBack.setFont(new Font("Tahoma", Font.PLAIN, 16));
@@ -136,13 +164,25 @@ public class Analyse_comparison{
 			public void actionPerformed(ActionEvent e) {
 				AnalyseUI anUI = new AnalyseUI(client, cityID);
 				anUI.frame.setVisible(true);
-				frame.dispose();
+				frmCompareBetween.dispose();
 			}
 		});
 		
 	}
 
+	private static boolean isValidDate(String str) {
+        boolean convertSuccess = true;
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            format.setLenient(false);
+            format.parse(str);
+        } catch (ParseException e) {
+            convertSuccess = false;
+        }
+        return convertSuccess;
+    }
+	
 	public JFrame getJFrame() {
-		return frame;
+		return frmCompareBetween;
 	}
 }
