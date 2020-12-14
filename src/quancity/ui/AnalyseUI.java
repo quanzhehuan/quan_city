@@ -34,7 +34,7 @@ import java.awt.Font;
 
 public class AnalyseUI {
 
-	public JFrame frmAnalyseOneDates;
+	public JFrame frame;
 	Client client;
 	private int cID;
 	private String date;
@@ -67,17 +67,16 @@ public class AnalyseUI {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frmAnalyseOneDates = new JFrame();
-		frmAnalyseOneDates.setTitle("Analyse one day's information");
-		frmAnalyseOneDates.setBounds(100, 100, 700, 500);
-		frmAnalyseOneDates.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frmAnalyseOneDates.getContentPane().setLayout(null);
+		frame = new JFrame();
+		frame.setBounds(100, 100, 700, 500);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.getContentPane().setLayout(null);
 
 		JPanel panel = new JPanel();
 		panel.setLayout(null);
 		panel.setBackground(Color.WHITE);
 		panel.setBounds(10, 11, 664, 439);
-		frmAnalyseOneDates.getContentPane().add(panel);
+		frame.getContentPane().add(panel);
 		panel.setLayout(new GridLayout(0, 2, 0, 8));
 
 		JLabel label = new JLabel("Statistics of ");
@@ -184,7 +183,7 @@ public class AnalyseUI {
 			public void actionPerformed(ActionEvent e) {
 				Dashboard db = new Dashboard();
 				db.frame.setVisible(true);
-				frmAnalyseOneDates.dispose();
+				frame.dispose();
 			}
 		});
 
@@ -203,7 +202,7 @@ public class AnalyseUI {
 	}
 
 	public JFrame getJFrame() {
-		return frmAnalyseOneDates;
+		return frame;
 	}
 
 	public void getCityInfo() {
