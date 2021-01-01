@@ -39,12 +39,12 @@ public class AnalyseUI {
 	private int cID;
 	private String date;
 	private JLabel lblDate;
-	private JLabel lbtSensors;
+	private JLabel lblSensors;
 	private JLabel lblStations;
 	private JLabel lblBollards;
-	private JLabel lblDistance;
+	private JLabel lblVehicles;
 	private JLabel lblExceeding;
-	private JLabel lblRatePollution;
+	private JLabel lblPollutionRate;
 	private String typedDate;
 
 	/**
@@ -93,16 +93,16 @@ public class AnalyseUI {
 		lblDate.setHorizontalAlignment(SwingConstants.LEFT);
 		panel.add(lblDate);
 
-		JLabel lblNewLabel_1 = new JLabel("The number of sensors installed in the city : ");
+		JLabel lblNewLabel_1 = new JLabel("Air Sensors installed in city : ");
 		lblNewLabel_1.setForeground(Color.BLACK);
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.RIGHT);
 		panel.add(lblNewLabel_1);
 
-		lbtSensors = new JLabel();
-		lbtSensors.setHorizontalAlignment(SwingConstants.LEFT);
-		panel.add(lbtSensors);
+		lblSensors = new JLabel();
+		lblSensors.setHorizontalAlignment(SwingConstants.LEFT);
+		panel.add(lblSensors);
 
-		JLabel lblTheNumberOf_1 = new JLabel("The number of Stations : ");
+		JLabel lblTheNumberOf_1 = new JLabel("Tramway Stations : ");
 		lblTheNumberOf_1.setHorizontalAlignment(SwingConstants.RIGHT);
 		panel.add(lblTheNumberOf_1);
 
@@ -110,7 +110,7 @@ public class AnalyseUI {
 		lblStations.setHorizontalAlignment(SwingConstants.LEFT);
 		panel.add(lblStations);
 
-		JLabel lblNewLabel_7 = new JLabel("The number of bollards : ");
+		JLabel lblNewLabel_7 = new JLabel("Retractable Bollards : ");
 		lblNewLabel_7.setHorizontalAlignment(SwingConstants.RIGHT);
 		panel.add(lblNewLabel_7);
 
@@ -127,23 +127,23 @@ public class AnalyseUI {
 			}
 		});
 
-		JLabel lblNewLabel_8 = new JLabel("Distance of public transit : ");
+		JLabel lblNewLabel_8 = new JLabel("Vehicles in city : ");
 		lblNewLabel_8.setHorizontalAlignment(SwingConstants.RIGHT);
 		panel.add(lblNewLabel_8);
 
-		lblDistance = new JLabel("");
-		lblDistance.setHorizontalAlignment(SwingConstants.LEFT);
-		panel.add(lblDistance);
+		lblVehicles = new JLabel("");
+		lblVehicles.setHorizontalAlignment(SwingConstants.LEFT);
+		panel.add(lblVehicles);
 
-		JLabel lblExceedingRateOf = new JLabel("Rate of pollution : ");
+		JLabel lblExceedingRateOf = new JLabel("Pollution rate : ");
 		lblExceedingRateOf.setHorizontalAlignment(SwingConstants.RIGHT);
 		panel.add(lblExceedingRateOf);
 
-		lblRatePollution = new JLabel("");
-		lblRatePollution.setHorizontalAlignment(SwingConstants.LEFT);
-		panel.add(lblRatePollution);
+		lblPollutionRate = new JLabel("");
+		lblPollutionRate.setHorizontalAlignment(SwingConstants.LEFT);
+		panel.add(lblPollutionRate);
 
-		JLabel lblExceedingRateOf_1 = new JLabel("Exceeding rate of pollution : ");
+		JLabel lblExceedingRateOf_1 = new JLabel("Pollution exceeding rate : ");
 		lblExceedingRateOf_1.setHorizontalAlignment(SwingConstants.RIGHT);
 		panel.add(lblExceedingRateOf_1);
 
@@ -236,11 +236,11 @@ public class AnalyseUI {
 
 	private void setDataToField(JSONObject res) {
 		try {
-			lbtSensors.setText("" + res.getInt("SensorNb"));
+			lblSensors.setText("" + res.getInt("SensorNb"));
 			lblStations.setText("" + res.getInt("stationNb"));
 			lblBollards.setText("" + res.getInt("bollardNb"));
-			lblDistance.setText(res.getInt("distance") + " km");
-			lblRatePollution.setText(res.getDouble("pollutionRate") + "%");
+			lblVehicles.setText(res.getInt("distance") + " km");
+			lblPollutionRate.setText(res.getDouble("pollutionRate") + "%");
 			lblExceeding.setText(res.getDouble("exceedingRate") + "%");
 		} catch (JSONException e) {
 			e.printStackTrace();
