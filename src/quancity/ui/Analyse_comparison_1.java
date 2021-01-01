@@ -40,9 +40,9 @@ import java.util.HashMap;
 		private JLabel lblSensors;
 		private JLabel lblStations ;
 		private JLabel lblBollards;
-		private JLabel lblDistance;
+		private JLabel lblVehicles;
 		private JLabel lblExceeding;
-		private JLabel lblRatePollution;
+		private JLabel lblPollutionRate;
 		private String date1;
 		private String date2;
 		JLabel label_3;
@@ -101,7 +101,7 @@ import java.util.HashMap;
 			lblNewLabel.setHorizontalAlignment(SwingConstants.LEFT);
 			panel.add(lblNewLabel);
 			
-			JLabel lblNewLabel_1 = new JLabel("The number of sensors installed in the city : ");
+			JLabel lblNewLabel_1 = new JLabel("Air Sensors installled in city : ");
 			lblNewLabel_1.setForeground(Color.BLACK);
 			lblNewLabel_1.setHorizontalAlignment(SwingConstants.RIGHT);
 			panel.add(lblNewLabel_1);
@@ -110,7 +110,7 @@ import java.util.HashMap;
 			lblSensors.setHorizontalAlignment(SwingConstants.LEFT);
 			panel.add(lblSensors);
 			
-			JLabel lblTheNumberOf_1 = new JLabel("The number of Stations : ");
+			JLabel lblTheNumberOf_1 = new JLabel("Tramway Stations : ");
 			lblTheNumberOf_1.setHorizontalAlignment(SwingConstants.RIGHT);
 			panel.add(lblTheNumberOf_1);
 			
@@ -118,7 +118,7 @@ import java.util.HashMap;
 			lblStations.setHorizontalAlignment(SwingConstants.LEFT);
 			panel.add(lblStations);
 			
-			JLabel lblNewLabel_7 = new JLabel("The number of bollards : ");
+			JLabel lblNewLabel_7 = new JLabel("Retractable Bollards : ");
 			lblNewLabel_7.setHorizontalAlignment(SwingConstants.RIGHT);
 			panel.add(lblNewLabel_7);
 			
@@ -133,23 +133,23 @@ import java.util.HashMap;
 				}
 			});
 			
-			JLabel lblNewLabel_8 = new JLabel("Distance of public transit : ");
+			JLabel lblNewLabel_8 = new JLabel("Vehicles in city : ");
 			lblNewLabel_8.setHorizontalAlignment(SwingConstants.RIGHT);
 			panel.add(lblNewLabel_8);
 			
-			lblDistance = new JLabel("");
-			lblDistance.setHorizontalAlignment(SwingConstants.LEFT);
-			panel.add(lblDistance);
+			lblVehicles = new JLabel("");
+			lblVehicles.setHorizontalAlignment(SwingConstants.LEFT);
+			panel.add(lblVehicles);
 			
-			JLabel lblExceedingRateOf = new JLabel("Rate of pollution : ");
+			JLabel lblExceedingRateOf = new JLabel("Pollution rate : ");
 			lblExceedingRateOf.setHorizontalAlignment(SwingConstants.RIGHT);
 			panel.add(lblExceedingRateOf);
 			
-			lblRatePollution = new JLabel("");
-			lblRatePollution.setHorizontalAlignment(SwingConstants.LEFT);
-			panel.add(lblRatePollution);
+			lblPollutionRate = new JLabel("");
+			lblPollutionRate.setHorizontalAlignment(SwingConstants.LEFT);
+			panel.add(lblPollutionRate);
 			
-			JLabel lblExceedingRateOf_1 = new JLabel("Exceeding rate of pollution : ");
+			JLabel lblExceedingRateOf_1 = new JLabel("Pollution exceeding rate : ");
 			lblExceedingRateOf_1.setHorizontalAlignment(SwingConstants.RIGHT);
 			panel.add(lblExceedingRateOf_1);
 			
@@ -174,50 +174,50 @@ import java.util.HashMap;
 			lblNewLabel_6.setHorizontalAlignment(SwingConstants.LEFT);
 			panel.add(lblNewLabel_6);
 			
-			JLabel label_2 = new JLabel("The number of sensors installed in the city : ");
-			label_2.setHorizontalAlignment(SwingConstants.RIGHT);
-			label_2.setForeground(Color.BLACK);
-			panel.add(label_2);
+			JLabel lblAirSensorsInstallled = new JLabel("Air Sensors installled in city : ");
+			lblAirSensorsInstallled.setHorizontalAlignment(SwingConstants.RIGHT);
+			lblAirSensorsInstallled.setForeground(Color.BLACK);
+			panel.add(lblAirSensorsInstallled);
 			
 			label_3 = new JLabel("");
 			label_3.setHorizontalAlignment(SwingConstants.LEFT);
 			panel.add(label_3);
 			
-			JLabel label_4 = new JLabel("The number of Stations : ");
-			label_4.setHorizontalAlignment(SwingConstants.RIGHT);
-			panel.add(label_4);
+			JLabel lblTramwayStations = new JLabel("Tramway Stations : ");
+			lblTramwayStations.setHorizontalAlignment(SwingConstants.RIGHT);
+			panel.add(lblTramwayStations);
 			
 			label_5 = new JLabel("");
 			label_5.setHorizontalAlignment(SwingConstants.LEFT);
 			panel.add(label_5);
 			
-			JLabel label_6 = new JLabel("The number of bollards : ");
-			label_6.setHorizontalAlignment(SwingConstants.RIGHT);
-			panel.add(label_6);
+			JLabel lblRetractableBollards = new JLabel("Retractable Bollards : ");
+			lblRetractableBollards.setHorizontalAlignment(SwingConstants.RIGHT);
+			panel.add(lblRetractableBollards);
 			
 			label_7 = new JLabel("");
 			label_7.setHorizontalAlignment(SwingConstants.LEFT);
 			panel.add(label_7);
 			
-			JLabel label_8 = new JLabel("Distance of public transit : ");
-			label_8.setHorizontalAlignment(SwingConstants.RIGHT);
-			panel.add(label_8);
+			JLabel lblVehiclesInCity = new JLabel("Vehicles in city : ");
+			lblVehiclesInCity.setHorizontalAlignment(SwingConstants.RIGHT);
+			panel.add(lblVehiclesInCity);
 			
 			label_9 = new JLabel("");
 			label_9.setHorizontalAlignment(SwingConstants.LEFT);
 			panel.add(label_9);
 			
-			JLabel label_10 = new JLabel("Rate of pollution : ");
-			label_10.setHorizontalAlignment(SwingConstants.RIGHT);
-			panel.add(label_10);
+			JLabel lblPollutionRate = new JLabel("Pollution rate : ");
+			lblPollutionRate.setHorizontalAlignment(SwingConstants.RIGHT);
+			panel.add(lblPollutionRate);
 			
 			label_11 = new JLabel("");
 			label_11.setHorizontalAlignment(SwingConstants.LEFT);
 			panel.add(label_11);
 			
-			JLabel label_12 = new JLabel("Exceeding rate of pollution : ");
-			label_12.setHorizontalAlignment(SwingConstants.RIGHT);
-			panel.add(label_12);
+			JLabel lblPollutionExceedingRate = new JLabel("Pollution exceeding rate : ");
+			lblPollutionExceedingRate.setHorizontalAlignment(SwingConstants.RIGHT);
+			panel.add(lblPollutionExceedingRate);
 			
 			label_13 = new JLabel("");
 			label_13.setHorizontalAlignment(SwingConstants.LEFT);
@@ -262,25 +262,25 @@ import java.util.HashMap;
 		
 		private void setDataToField(JSONObject res) {
 			try {
-				lblSensors.setText("" + res.getInt("SensorNb"));
+				lblSensors.setText("" + res.getInt("sensorNb"));
 				lblStations.setText("" + res.getInt("stationNb"));
 				lblBollards.setText("" + res.getInt("bollardNb"));
-				lblDistance.setText(res.getInt("distance") + " km");
-				lblRatePollution.setText(res.getDouble("pollutionRate") + "%");
-				lblExceeding.setText(res.getDouble("exceedingRate") + "%");
-			}catch (JSONException e) {
-					e.printStackTrace();
+				lblVehicles.setText("" + res.getInt("vehicleNb"));
+				lblPollutionRate.setText(res.getInt("pollutionRate") + "%");
+				lblExceeding.setText(res.getInt("exceedingRate") + "%");
+			} catch (JSONException e) {
+				e.printStackTrace();
 			}
-		}	
+		}
 		
 		private void setDataToField1(JSONObject res) {
 			try {
-				label_3.setText("" + res.getInt("SensorNb"));
+				label_3.setText("" + res.getInt("sensorNb"));
 				label_5.setText("" + res.getInt("stationNb"));
 				label_7.setText("" + res.getInt("bollardNb"));
-				label_9.setText(res.getInt("distance") + " km");
-				label_11.setText(res.getDouble("pollutionRate") + "%");
-				label_13.setText(res.getDouble("exceedingRate") + "%");
+				label_9.setText("" + res.getInt("vehicleNb"));
+				label_11.setText(res.getInt("pollutionRate") + "%");
+				label_13.setText(res.getInt("exceedingRate") + "%");
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
