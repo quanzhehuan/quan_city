@@ -55,7 +55,7 @@ public class AnalyseUI {
 		this.client = client;
 		this.cID = cID;
 		Date datedate = new Date();
-		SimpleDateFormat dateFormat=new SimpleDateFormat("YYYY-MM-dd");
+		SimpleDateFormat dateFormat=new SimpleDateFormat("yyyy-MM-dd");
 		this.date = dateFormat.format(datedate);
 		initialize();
 
@@ -236,12 +236,12 @@ public class AnalyseUI {
 
 	private void setDataToField(JSONObject res) {
 		try {
-			lblSensors.setText("" + res.getInt("SensorNb"));
+			lblSensors.setText("" + res.getInt("sensorNb"));
 			lblStations.setText("" + res.getInt("stationNb"));
 			lblBollards.setText("" + res.getInt("bollardNb"));
-			lblVehicles.setText(res.getInt("distance") + " km");
-			lblPollutionRate.setText(res.getDouble("pollutionRate") + "%");
-			lblExceeding.setText(res.getDouble("exceedingRate") + "%");
+			lblVehicles.setText("" + res.getInt("vehicleNb"));
+			lblPollutionRate.setText(res.getInt("pollutionRate") + "%");
+			lblExceeding.setText(res.getInt("exceedingRate") + "%");
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
