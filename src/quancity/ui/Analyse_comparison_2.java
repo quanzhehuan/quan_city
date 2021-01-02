@@ -31,26 +31,22 @@ import java.util.HashMap;
 	import java.awt.event.ActionEvent;
 	import javax.swing.SwingConstants;
 	import java.awt.Font;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import java.awt.SystemColor;
+import javax.swing.ScrollPaneConstants;
 	
 	public class Analyse_comparison_2 {
 
 		public JFrame frame;
 		Client client;
 		private int cityID;
-		private JLabel lblSensors;
-		private JLabel lblStations ;
-		private JLabel lblBollards;
-		private JLabel lblDistance;
-		private JLabel lblExceeding;
-		private JLabel lblRatePollution;
 		private String date1;
 		private String date2;
-		JLabel label_3;
-		JLabel label_5;
-		JLabel label_7;
-		JLabel label_9;
-		JLabel label_11;
-		JLabel label_13;
+		private JTextArea jta;
+		private JTextArea jta1;
+		private JTextField txtEvolutionBetweenTwo;
+		private JTextField txtInfomationOfEveryday;
 		
 		/**
 		 * Create the application.
@@ -63,8 +59,8 @@ import java.util.HashMap;
 			this.date2 = date2;
 			initialize();
 			
-			getSensorInfo();
-			getSensorInfo1();
+			getAnalyseInfo();
+			getDailyInfo();
 			
 			/*
 			getSensorInfo(date1);
@@ -90,140 +86,49 @@ import java.util.HashMap;
 			frame.getContentPane().add(panel);
 			panel.setLayout(new GridLayout(0, 2, 0, 8));
 			
-			JLabel label = new JLabel("Statistics of ");
-			label.setFont(new Font("Tahoma", Font.PLAIN, 16));
-			label.setHorizontalAlignment(SwingConstants.RIGHT);
-			panel.add(label);
+			JScrollPane scrollPane = new JScrollPane(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+			scrollPane.setSize(0, 439);
+			panel.add(scrollPane);
 			
-			JLabel lblNewLabel = new JLabel("");
-			lblNewLabel.setText(date1);
-			lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
-			lblNewLabel.setHorizontalAlignment(SwingConstants.LEFT);
-			panel.add(lblNewLabel);
+			jta = new JTextArea();
+			scrollPane.setViewportView(jta);
+			jta.setFont(new Font("Serif", Font.PLAIN, 20));
+			jta.setBackground(new Color(224, 255, 255));
+			jta.setEditable(false);
 			
-			JLabel lblNewLabel_1 = new JLabel("The number of sensors installed in the city : ");
-			lblNewLabel_1.setForeground(Color.BLACK);
-			lblNewLabel_1.setHorizontalAlignment(SwingConstants.RIGHT);
-			panel.add(lblNewLabel_1);
-			
-			lblSensors = new JLabel();
-			lblSensors.setHorizontalAlignment(SwingConstants.LEFT);
-			panel.add(lblSensors);
-			
-			JLabel lblTheNumberOf_1 = new JLabel("The number of Stations : ");
-			lblTheNumberOf_1.setHorizontalAlignment(SwingConstants.RIGHT);
-			panel.add(lblTheNumberOf_1);
-			
-			lblStations = new JLabel("");
-			lblStations.setHorizontalAlignment(SwingConstants.LEFT);
-			panel.add(lblStations);
-			
-			JLabel lblNewLabel_7 = new JLabel("The number of bollards : ");
-			lblNewLabel_7.setHorizontalAlignment(SwingConstants.RIGHT);
-			panel.add(lblNewLabel_7);
-			
-			lblBollards = new JLabel("");
-			lblBollards.setHorizontalAlignment(SwingConstants.LEFT);
-			panel.add(lblBollards);
+			txtEvolutionBetweenTwo = new JTextField();
+			txtEvolutionBetweenTwo.setEditable(false);
+			txtEvolutionBetweenTwo.setText("Analyse Information");
+			txtEvolutionBetweenTwo.setHorizontalAlignment(SwingConstants.CENTER);
+			txtEvolutionBetweenTwo.setFont(new Font("Tahoma", Font.PLAIN, 18));
+			scrollPane.setColumnHeaderView(txtEvolutionBetweenTwo);
+			txtEvolutionBetweenTwo.setColumns(10);
 			
 			JButton btnNewButton_3 = new JButton("Back");
+			btnNewButton_3.setFont(new Font("Tahoma", Font.PLAIN, 16));
+			scrollPane.setRowHeaderView(btnNewButton_3);
 			btnNewButton_3.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					frame.dispose();
 				}
 			});
 			
-			JLabel lblNewLabel_8 = new JLabel("Distance of public transit : ");
-			lblNewLabel_8.setHorizontalAlignment(SwingConstants.RIGHT);
-			panel.add(lblNewLabel_8);
+			JScrollPane scrollPane_1 = new JScrollPane(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+			panel.add(scrollPane_1);
 			
-			lblDistance = new JLabel("");
-			lblDistance.setHorizontalAlignment(SwingConstants.LEFT);
-			panel.add(lblDistance);
+			jta1 = new JTextArea();
+			jta1.setFont(new Font("Serif", Font.PLAIN, 20));
+			jta1.setEditable(false);
+			jta1.setBackground(new Color(224, 255, 255));
+			scrollPane_1.setViewportView(jta1);
 			
-			JLabel lblExceedingRateOf = new JLabel("Rate of pollution : ");
-			lblExceedingRateOf.setHorizontalAlignment(SwingConstants.RIGHT);
-			panel.add(lblExceedingRateOf);
-			
-			lblRatePollution = new JLabel("");
-			lblRatePollution.setHorizontalAlignment(SwingConstants.LEFT);
-			panel.add(lblRatePollution);
-			
-			JLabel lblExceedingRateOf_1 = new JLabel("Exceeding rate of pollution : ");
-			lblExceedingRateOf_1.setHorizontalAlignment(SwingConstants.RIGHT);
-			panel.add(lblExceedingRateOf_1);
-			
-			
-			lblExceeding = new JLabel("");
-			lblExceeding.setHorizontalAlignment(SwingConstants.LEFT);
-			panel.add(lblExceeding);
-			
-			JLabel lblNewLabel_2 = new JLabel("");
-			panel.add(lblNewLabel_2);
-			
-			JLabel label_14 = new JLabel("");
-			panel.add(label_14);
-			
-			JLabel label_1 = new JLabel("Statistics of ");
-			label_1.setHorizontalAlignment(SwingConstants.RIGHT);
-			label_1.setFont(new Font("Tahoma", Font.PLAIN, 16));
-			panel.add(label_1);
-			
-			JLabel lblNewLabel_6 = new JLabel(date2);
-			lblNewLabel_6.setFont(new Font("Tahoma", Font.PLAIN, 16));
-			lblNewLabel_6.setHorizontalAlignment(SwingConstants.LEFT);
-			panel.add(lblNewLabel_6);
-			
-			JLabel label_2 = new JLabel("The number of sensors installed in the city : ");
-			label_2.setHorizontalAlignment(SwingConstants.RIGHT);
-			label_2.setForeground(Color.BLACK);
-			panel.add(label_2);
-			
-			label_3 = new JLabel("");
-			label_3.setHorizontalAlignment(SwingConstants.LEFT);
-			panel.add(label_3);
-			
-			JLabel label_4 = new JLabel("The number of Stations : ");
-			label_4.setHorizontalAlignment(SwingConstants.RIGHT);
-			panel.add(label_4);
-			
-			label_5 = new JLabel("");
-			label_5.setHorizontalAlignment(SwingConstants.LEFT);
-			panel.add(label_5);
-			
-			JLabel label_6 = new JLabel("The number of bollards : ");
-			label_6.setHorizontalAlignment(SwingConstants.RIGHT);
-			panel.add(label_6);
-			
-			label_7 = new JLabel("");
-			label_7.setHorizontalAlignment(SwingConstants.LEFT);
-			panel.add(label_7);
-			
-			JLabel label_8 = new JLabel("Distance of public transit : ");
-			label_8.setHorizontalAlignment(SwingConstants.RIGHT);
-			panel.add(label_8);
-			
-			label_9 = new JLabel("");
-			label_9.setHorizontalAlignment(SwingConstants.LEFT);
-			panel.add(label_9);
-			
-			JLabel label_10 = new JLabel("Rate of pollution : ");
-			label_10.setHorizontalAlignment(SwingConstants.RIGHT);
-			panel.add(label_10);
-			
-			label_11 = new JLabel("");
-			label_11.setHorizontalAlignment(SwingConstants.LEFT);
-			panel.add(label_11);
-			
-			JLabel label_12 = new JLabel("Exceeding rate of pollution : ");
-			label_12.setHorizontalAlignment(SwingConstants.RIGHT);
-			panel.add(label_12);
-			
-			label_13 = new JLabel("");
-			label_13.setHorizontalAlignment(SwingConstants.LEFT);
-			panel.add(label_13);
-			panel.add(btnNewButton_3);
-			
+			txtInfomationOfEveryday = new JTextField();
+			txtInfomationOfEveryday.setEditable(false);
+			txtInfomationOfEveryday.setText("Infomation of each date");
+			txtInfomationOfEveryday.setHorizontalAlignment(SwingConstants.CENTER);
+			txtInfomationOfEveryday.setFont(new Font("Tahoma", Font.PLAIN, 18));
+			txtInfomationOfEveryday.setColumns(10);
+			scrollPane_1.setColumnHeaderView(txtInfomationOfEveryday);
 		}
 		
 		
@@ -231,67 +136,43 @@ import java.util.HashMap;
 			return frame;
 		}
 		
-		public void getCityInfo() {
+		private void setDataToField(JSONObject res) {
 			try {
-				client.setResponseData(null);
-				JSONObject bodyItem = new JSONObject();
-				bodyItem.put("ID", "" + cityID);
-				bodyItem.put("date", date1);
-
-				SendPackage sendPa = new SendPackage();
-				sendPa.setApi(ApiEnum.ANALYSE_TODAY);
-				sendPa.setBody(bodyItem);
-				client.setSendP(sendPa);
-
-				JSONObject res = null;
-				while (res == null) {
-					res = client.getResponseData();
-
-					System.out.println("wait res:" + res);
-					if (res != null) {
-						// if success true - get data bind to table
-						setDataToField((res.getJSONArray("data")).getJSONObject(0));
-					}
-				}
-				// CLOSE
-
+				jta.setText("" + res.getInt("sensorNb"));
+				/*
+				lblSensors.setText("" + res.getInt("sensorNb"));
+				lblStations.setText("" + res.getInt("stationNb"));
+				lblBollards.setText("" + res.getInt("bollardNb"));
+				lblVehicles.setText("" + res.getInt("vehicleNb"));
+				lblPollutionRate.setText(res.getInt("pollutionRate") + "%");
+				lblExceeding.setText(res.getInt("exceedingRate") + "%");
+				*/
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
 		}
 		
-		private void setDataToField(JSONObject res) {
-			try {
-				lblSensors.setText("" + res.getInt("SensorNb"));
-				lblStations.setText("" + res.getInt("stationNb"));
-				lblBollards.setText("" + res.getInt("bollardNb"));
-				lblDistance.setText(res.getInt("distance") + " km");
-				lblRatePollution.setText(res.getDouble("pollutionRate") + "%");
-				lblExceeding.setText(res.getDouble("exceedingRate") + "%");
-			}catch (JSONException e) {
-					e.printStackTrace();
-			}
-		}	
-		
 		private void setDataToField1(JSONObject res) {
 			try {
-				label_3.setText("" + res.getInt("SensorNb"));
-				label_5.setText("" + res.getInt("stationNb"));
-				label_7.setText("" + res.getInt("bollardNb"));
-				label_9.setText(res.getInt("distance") + " km");
-				label_11.setText(res.getDouble("pollutionRate") + "%");
-				label_13.setText(res.getDouble("exceedingRate") + "%");
+				jta1.setText(date1);
+				jta1.setText(jta1.getText() + "\n" + "Air Sensors installed in city : " + res.getInt("sensorNb"));
+				jta1.setText(jta1.getText() + "\n" + "Tramway Stations : " + res.getInt("stationNb"));
+				jta1.setText(jta1.getText() + "\n" + "Retractable Bollards : " + res.getInt("bollardNb"));
+				jta1.setText(jta1.getText() + "\n" + "Vehicles in city : " + res.getInt("vehicleNb"));
+				jta1.setText(jta1.getText() + "\n" + "Pollution rate : " + res.getInt("pollutionRate") + "%");
+				jta1.setText(jta1.getText() + "\n" + "Pollution exceeding rate : " + res.getInt("exceedingRate") + "%");
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
 			
 		}	
-		public void getSensorInfo() {
+		public void getAnalyseInfo() {
 			try {
 				client.setResponseData(null);
 				JSONObject bodyItem = new JSONObject();
 				bodyItem.put("ID", "" + cityID);
-				bodyItem.put("date", date1);
+				bodyItem.put("date1", date1);
+				bodyItem.put("date2", date2);
 
 				SendPackage sendPa = new SendPackage();
 				sendPa.setApi(ApiEnum.ANALYSE_DATE);
@@ -314,12 +195,12 @@ import java.util.HashMap;
 			}
 		}
 		
-		public void getSensorInfo1() {
+		public void getDailyInfo() {
 			try {
 				client.setResponseData(null);
 				JSONObject bodyItem = new JSONObject();
 				bodyItem.put("ID", "" + cityID);
-				bodyItem.put("date", date2);
+				bodyItem.put("date", date1);
 
 				SendPackage sendPa = new SendPackage();
 				sendPa.setApi(ApiEnum.ANALYSE_DATE);

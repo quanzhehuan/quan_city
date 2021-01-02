@@ -134,6 +134,56 @@ public class AnalyseProvider {
 		}
 	}
 	
+	public static ApiResponse getAnalyseInfoByPeriod(int cID, String date, String date1) {
+		try {
+			String sql =  "SELECT (SELECT date FROM AnalyseInfo WHERE date = '" + date + "') AS date"
+					+ ",(SELECT COUNT(*) FROM airSensor WHERE installDate <= '" + date + "') AS sensorNb"
+					+ ",(SELECT COUNT(*) FROM station WHERE openDate <= '" + date + "') AS stationNb"
+					+ ",(SELECT COUNT(*) FROM bollardEquipment) AS bollardNb"
+					+ ",(SELECT nbVehicleInCity FROM vehicleHistory WHERE date <= '" + date + "' ORDER BY historyId DESC LIMIT 1) AS vehicleNb"
+					+ ",(SELECT SUM(no2) / COUNT(no2) FROM airSensorHistory WHERE date = '" + date + "') AS pollutionRate1"
+					+ ",(SELECT SUM(pm10) / COUNT(pm10) FROM airSensorHistory WHERE date = '" + date + "') AS pollutionRate2"
+					+ ",(SELECT SUM(o3) / COUNT(o3) FROM airSensorHistory WHERE date = '" + date + "') AS pollutionRate3"
+					;
+			st =  conn.createStatement();
+			ResultSet rs = st.executeQuery(sql);        	
+
+			JSONArray cityAll = new JSONArray();
+			if(rs.next() == false) {
+				return new ApiResponse(false, cityAll, "Not Found");
+			}else {
+				do {
+					double pollutionRateAvg = (rs.getDouble("pollutionRate1") + rs.getDouble("pollutionRate2") + rs.getDouble("pollutionRate3")) / 3;
+					double exceedingRate;
+					if(pollutionRateAvg > 100)
+						exceedingRate = pollutionRateAvg - 100;
+					else
+						exceedingRate = 0;
+					JSONObject resItem = new JSONObject();                
+					
+					resItem.put("sensorNb", "" + rs.getInt("sensorNb"));
+					resItem.put("stationNb", "" + rs.getInt("stationNb"));
+					resItem.put("bollardNb", "" + rs.getInt("bollardNb"));
+					resItem.put("vehicleNb", "" + rs.getInt("vehicleNb"));
+					resItem.put("pollutionRate", "" + Math.round(pollutionRateAvg));
+					resItem.put("exceedingRate", "" + Math.round(exceedingRate));
+					
+					cityAll.put(resItem);                    
+				}	while(rs.next());
+				return new ApiResponse(true, cityAll, "Success");
+			}     	
+		} catch (Exception e) {
+			e.printStackTrace();
+			try {
+				return new ApiResponse(false, null, e.getMessage());
+			} catch (JSONException e1) {
+				e1.printStackTrace();
+				return null;
+			}
+
+		}
+	}
+	
 	/*
 	public static ApiResponse getAnalyseInfoByDate(int id) throws SQLException {
 		

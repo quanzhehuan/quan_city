@@ -252,6 +252,15 @@ public class Router {
 		}
 		return null;
 	}
+	
+	public static String AnalysePeriod(int cID, String date, String date1) {
+		try {
+			return analyseProvider.getAnalyseInfoByPeriod(cID, date, date1).toString();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 
 	// input {api:"CITYSave",body:{}}
 	public static String router(JSONObject input) throws SQLException {
@@ -280,7 +289,18 @@ public class Router {
 
 			case "CITY_DELETE":
 				return deleteCity();
-
+				
+				
+				
+			case "ANALYSE_TODAY":
+				body = input.getJSONObject("body");
+				return AnalyseToday((int) body.getInt("ID"));
+			
+			case "ANALYSE_DATE":
+				body = input.getJSONObject("body");
+				return AnalyseDate((int)body.getInt("ID"), body.getString("date"));
+			
+			/*
 			// tramway
 			case "TRAMWAY_GET_ONE":
 				body = input.getJSONObject("body");
@@ -344,15 +364,7 @@ public class Router {
 				body = input.getJSONObject("body");
 				deleteVehiculeSensorById((int) body.getInt("id"), (int) body.getInt("alert_id"));
 				return "DELETED";
-
-			case "ANALYSE_TODAY":
-				body = input.getJSONObject("body");
-				return AnalyseToday((int) body.getInt("ID"));
 			
-			case "ANALYSE_DATE":
-				body = input.getJSONObject("body");
-				return AnalyseDate((int)body.getInt("ID"), body.getString("date"));
-
 			// threshold
 			case "THRESHOLD_CREATE":
 				return createThreshold((JSONObject) input.get("body"));
@@ -368,6 +380,8 @@ public class Router {
 				body = input.getJSONObject("body");
 				// deleteThresholdById((int) body.getInt("id"),(int) body.getInt("alert_id"));
 				return "DELETED";
+			*/
+
 			default:
 				return new ApiResponse(false, null, "Not found API").toString();
 			}

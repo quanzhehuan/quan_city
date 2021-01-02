@@ -23,6 +23,8 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import java.awt.event.ActionListener;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -99,6 +101,7 @@ public class Analyse_comparison{
 		panel.add(label_3);
 		
 		txtDate1 = new JTextField();
+		txtDate1.setForeground(new Color(0, 191, 255));
 		txtDate1.setFont(new Font("Tahoma", Font.ITALIC, 16));
 		txtDate1.setHorizontalAlignment(SwingConstants.CENTER);
 		txtDate1.setText(Calendar.getInstance().get(Calendar.YEAR) + "-" + (Calendar.getInstance().get(Calendar.MONTH) + 1) + "-"  + Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
@@ -106,9 +109,23 @@ public class Analyse_comparison{
 		txtDate1.setColumns(10);
 		
 		txtDate2 = new JTextField();
+		txtDate2.setForeground(new Color(0, 191, 255));
+		txtDate2.setText("Type Second Date Here");
 		txtDate2.setFont(new Font("Tahoma", Font.ITALIC, 16));
 		txtDate2.setHorizontalAlignment(SwingConstants.CENTER);
-		txtDate2.setText("Second Date");
+		/*
+		txtDate2.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusGained(FocusEvent e){
+				txtDate2.setText("");
+			}
+			@Override
+			public void focusLost(FocusEvent e)
+			{
+				txtDate2.setText("Type Second Date");
+			}
+		});
+		*/
 		panel.add(txtDate2);
 		txtDate2.setColumns(10);
 		
@@ -148,14 +165,42 @@ public class Analyse_comparison{
 		panel.add(lblNewLabel_1);
 		
 		txtDate3 = new JTextField();
+		txtDate3.setForeground(new Color(106, 90, 205));
+		txtDate3.setText("Type First Date Here");
+		/*
+		txtDate3.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusGained(FocusEvent e){
+				txtDate3.setText("");
+			}
+			@Override
+			public void focusLost(FocusEvent e)
+			{
+				txtDate3.setText("Type First Date");
+			}
+		});
+		*/
 		panel.add(txtDate3);
-		txtDate3.setText("First Date");
 		txtDate3.setHorizontalAlignment(SwingConstants.CENTER);
 		txtDate3.setFont(new Font("Tahoma", Font.ITALIC, 16));
 		txtDate3.setColumns(10);
 		
 		txtDate4 = new JTextField();
-		txtDate4.setText("Second Date");
+		txtDate4.setForeground(new Color(106, 90, 205));
+		txtDate4.setText("Type Second Date Here");
+		/*
+		txtDate4.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusGained(FocusEvent e){
+				txtDate4.setText("");
+			}
+			@Override
+			public void focusLost(FocusEvent e)
+			{
+				txtDate4.setText("Type Second Date");
+			}
+		});
+		*/
 		txtDate4.setHorizontalAlignment(SwingConstants.CENTER);
 		txtDate4.setFont(new Font("Tahoma", Font.ITALIC, 16));
 		txtDate4.setColumns(10);
