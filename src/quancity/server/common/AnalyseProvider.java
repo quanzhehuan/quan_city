@@ -136,13 +136,23 @@ public class AnalyseProvider {
 	public static ApiResponse getAnalyseInfoByPeriod(int cID, String date1, String date2) {
 		try {
 			String sql =  "SELECT (SELECT date FROM AnalyseInfo WHERE date = '" + date1 + "') AS date"
-					+ ",(SELECT COUNT(*) FROM airSensor WHERE installDate <= '" + date1 + "') AS sensorNb"
-					+ ",(SELECT COUNT(*) FROM station WHERE openDate <= '" + date1 + "') AS stationNb"
-					+ ",(SELECT COUNT(*) FROM bollardEquipment) AS bollardNb"
-					+ ",(SELECT nbVehicleInCity FROM vehicleHistory WHERE date <= '" + date1 + "' ORDER BY historyId DESC LIMIT 1) AS vehicleNb"
+					+ ",(SELECT COUNT(*) FROM airSensor WHERE installDate <= '" + date1 + "') AS sensorNb1"
+					+ ",(SELECT COUNT(*) FROM airSensor WHERE installDate <= '" + date2 + "') AS sensorNb2"
+					+ ",(SELECT COUNT(*) FROM station WHERE openDate <= '" + date1 + "') AS stationNb1"
+					+ ",(SELECT COUNT(*) FROM station WHERE openDate <= '" + date2 + "') AS stationNb2"
+					+ ",(SELECT COUNT(*) FROM bollardEquipment) AS bollardNb1"
+					+ ",(SELECT COUNT(*) FROM bollardEquipment) AS bollardNb2"
+					+ ",(SELECT nbVehicleInCity FROM vehicleHistory WHERE date <= '" + date1 + "' ORDER BY historyId DESC LIMIT 1) AS vehicleNb1"
+					+ ",(SELECT nbVehicleInCity FROM vehicleHistory WHERE date <= '" + date2 + "' ORDER BY historyId DESC LIMIT 1) AS vehicleNb2"
 					+ ",(SELECT SUM(no2) / COUNT(no2) FROM airSensorHistory WHERE date = '" + date1 + "') AS pollutionRate1"
 					+ ",(SELECT SUM(pm10) / COUNT(pm10) FROM airSensorHistory WHERE date = '" + date1 + "') AS pollutionRate2"
 					+ ",(SELECT SUM(o3) / COUNT(o3) FROM airSensorHistory WHERE date = '" + date1 + "') AS pollutionRate3"
+					+ ",(SELECT SUM(no2) / COUNT(no2) FROM airSensorHistory WHERE date = '" + date2 + "') AS pollutionRate01"
+					+ ",(SELECT SUM(pm10) / COUNT(pm10) FROM airSensorHistory WHERE date = '" + date2 + "') AS pollutionRate02"
+					+ ",(SELECT SUM(o3) / COUNT(o3) FROM airSensorHistory WHERE date = '" + date2 + "') AS pollutionRate03"
+					+ ",(SELECT SUM(no2) / COUNT(no2) FROM airSensorHistory) AS pollutionRateHis1"
+					+ ",(SELECT SUM(pm10) / COUNT(pm10) FROM airSensorHistory) AS pollutionRateHis2"
+					+ ",(SELECT SUM(o3) / COUNT(o3) FROM airSensorHistory) AS pollutionRateHis3"
 					;
 			st =  conn.createStatement();
 			ResultSet rs = st.executeQuery(sql);        	
@@ -153,19 +163,35 @@ public class AnalyseProvider {
 			}else {
 				do {
 					double pollutionRateAvg = (rs.getDouble("pollutionRate1") + rs.getDouble("pollutionRate2") + rs.getDouble("pollutionRate3")) / 3;
+					double pollutionRateAvg1 = (rs.getDouble("pollutionRate01") + rs.getDouble("pollutionRate02") + rs.getDouble("pollutionRate03")) / 3;
+					double pollutionRateAvgHis = (rs.getDouble("pollutionRateHis1") + rs.getDouble("pollutionRateHis2") + rs.getDouble("pollutionRateHis3")) / 3;
+
 					double exceedingRate;
+					double exceedingRate1;
+					double exceedingRateHis;
+
 					if(pollutionRateAvg > 100)
 						exceedingRate = pollutionRateAvg - 100;
 					else
 						exceedingRate = 0;
+					if(pollutionRateAvg1 > 100)
+						exceedingRate1 = pollutionRateAvg1 - 100;
+					else
+						exceedingRate1 = 0;
+					if(pollutionRateAvgHis > 100)
+						exceedingRateHis = pollutionRateAvgHis - 100;
+					else
+						exceedingRateHis = 0;
 					JSONObject resItem = new JSONObject();                
 					
-					resItem.put("sensorNb", "" + rs.getInt("sensorNb"));
-					resItem.put("stationNb", "" + rs.getInt("stationNb"));
-					resItem.put("bollardNb", "" + rs.getInt("bollardNb"));
-					resItem.put("vehicleNb", "" + rs.getInt("vehicleNb"));
-					resItem.put("pollutionRate", "" + Math.round(pollutionRateAvg));
-					resItem.put("exceedingRate", "" + Math.round(exceedingRate));
+					resItem.put("sensorNb", "" + (rs.getInt("sensorNb2") - rs.getInt("sensorNb1")));
+					resItem.put("stationNb", "" + (rs.getInt("stationNb2") - rs.getInt("stationNb1")));
+					resItem.put("bollardNb", "" + (rs.getInt("bollardNb2") - rs.getInt("bollardNb1")));
+					resItem.put("vehicleNb", "" + (rs.getInt("vehicleNb2") - rs.getInt("vehicleNb1")));
+					resItem.put("pollutionRate", "" + Math.round(pollutionRateAvg1 - pollutionRateAvg));
+					resItem.put("exceedingRate", "" + Math.round(exceedingRate1 - exceedingRate));
+					resItem.put("pollutionRateHis", "" + Math.round(pollutionRateAvgHis));
+					resItem.put("exceedingRateHis", "" + Math.round(exceedingRateHis));
 					
 					cityAll.put(resItem);                    
 				}	while(rs.next());

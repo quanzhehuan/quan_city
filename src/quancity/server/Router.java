@@ -300,7 +300,7 @@ public class Router {
 				body = input.getJSONObject("body");
 				return AnalyseDate((int)body.getInt("ID"), body.getString("date"));
 			
-			case "ANA_DAILY_INFO":
+			case "ANALYSE_INFO":
 				body = input.getJSONObject("body");
 				return AnalysePeriod((int)body.getInt("ID"), body.getString("date1"), body.getString("date2"));
 			/*

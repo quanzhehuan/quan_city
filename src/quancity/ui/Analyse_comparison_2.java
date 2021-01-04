@@ -68,7 +68,7 @@ import javax.swing.ScrollPaneConstants;
 			 
 			bt=sdf.parse(date1); 
 			et=sdf.parse(date2); 
-			//getAnalyseInfo(bt);
+			getAnalyseInfo(bt, et);
 
 			while (bt.before(et) || bt.equals(et)) {
 				getDailyInfo(bt);
@@ -92,11 +92,12 @@ import javax.swing.ScrollPaneConstants;
 			frame.getContentPane().add(panel);
 			panel.setLayout(new GridLayout(0, 2, 0, 8));
 			
-			JScrollPane scrollPane = new JScrollPane(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+			JScrollPane scrollPane = new JScrollPane(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 			scrollPane.setSize(0, 439);
 			panel.add(scrollPane);
 			
 			jta = new JTextArea();
+			jta.setLineWrap(true);
 			scrollPane.setViewportView(jta);
 			jta.setFont(new Font("Serif", Font.PLAIN, 20));
 			jta.setBackground(new Color(224, 255, 255));
@@ -144,13 +145,15 @@ import javax.swing.ScrollPaneConstants;
 		
 		private void setDataToField(JSONObject res) {
 			try {
-				jta1.setText(jta1.getText() + sdf.format(bt).toString());
-				jta1.setText(jta1.getText() + "\n" + "Air Sensors installed in city : " + res.getInt("sensorNb"));
-				jta1.setText(jta1.getText() + "\n" + "Tramway Stations : " + res.getInt("stationNb"));
-				jta1.setText(jta1.getText() + "\n" + "Retractable Bollards : " + res.getInt("bollardNb"));
-				jta1.setText(jta1.getText() + "\n" + "Vehicles in city : " + res.getInt("vehicleNb"));
-				jta1.setText(jta1.getText() + "\n" + "Pollution rate : " + res.getInt("pollutionRate") + "%");
-				jta1.setText(jta1.getText() + "\n" + "Pollution exceeding rate : " + res.getInt("exceedingRate") + "%\n\n");
+				jta.setText(jta.getText() + "The evolution between \n" + sdf.format(bt).toString() + " \nand\n" + sdf.format(et).toString() + " : \n");
+				jta.setText(jta.getText() + "\n" + "The evolution of Air Sensor installed in city : " + res.getInt("sensorNb"));
+				jta.setText(jta.getText() + "\n" + "The difference of Tramway Stations : " + res.getInt("stationNb"));
+				jta.setText(jta.getText() + "\n" + "The difference of retractable bollards installed : " + res.getInt("bollardNb"));
+				jta.setText(jta.getText() + "\n" + "The evolution of vehicles in city : " + res.getInt("vehicleNb"));
+				jta.setText(jta.getText() + "\n" + "The difference of pollution rate : " + res.getInt("pollutionRate") + "%");
+				jta.setText(jta.getText() + "\n" + "The difference of pollution exceeding rate : " + res.getInt("exceedingRate") + "%\n\n");
+				jta.setText(jta.getText() + "\n" + "Pollution rate's history avg : " + res.getInt("pollutionRateHis") + "%");
+				jta.setText(jta.getText() + "\n" + "Pollution exceeding rate's history avg : " + res.getInt("exceedingRateHis") + "%\n");
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
@@ -165,21 +168,22 @@ import javax.swing.ScrollPaneConstants;
 				jta1.setText(jta1.getText() + "\n" + "Vehicles in city : " + res.getInt("vehicleNb"));
 				jta1.setText(jta1.getText() + "\n" + "Pollution rate : " + res.getInt("pollutionRate") + "%");
 				jta1.setText(jta1.getText() + "\n" + "Pollution exceeding rate : " + res.getInt("exceedingRate") + "%\n\n");
+
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
 			
 		}	
-		public void getAnalyseInfo(Date date) {
+		public void getAnalyseInfo(Date date1, Date date2) {
 			try {
 				client.setResponseData(null);
 				JSONObject bodyItem = new JSONObject();
 				bodyItem.put("ID", "" + cityID);
-				bodyItem.put("date", sdf.format(date));
-				//bodyItem.put("date2", date2);
+				bodyItem.put("date1", sdf.format(date1));
+				bodyItem.put("date2", sdf.format(date2));
 
 				SendPackage sendPa = new SendPackage();
-				sendPa.setApi(ApiEnum.ANALYSE_DATE);
+				sendPa.setApi(ApiEnum.ANALYSE_INFO);
 				sendPa.setBody(bodyItem);
 				client.setSendP(sendPa);
 
@@ -190,7 +194,7 @@ import javax.swing.ScrollPaneConstants;
 					System.out.println("wait res:" + res);
 					if (res != null) {
 						// if success true - get data bind to table
-						setDataToField1((res.getJSONArray("data")).getJSONObject(0));
+						setDataToField((res.getJSONArray("data")).getJSONObject(0));
 					}
 				}
 				// CLOSE
