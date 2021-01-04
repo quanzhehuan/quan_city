@@ -23,6 +23,8 @@ package quancity.ui;
 	import javax.swing.JLabel;
 	import java.awt.event.ActionListener;
 	import java.io.IOException;
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -43,31 +45,35 @@ import javax.swing.ScrollPaneConstants;
 		private int cityID;
 		private String date1;
 		private String date2;
+		private Date bt;
+		private Date et;
 		private JTextArea jta;
 		private JTextArea jta1;
 		private JTextField txtEvolutionBetweenTwo;
 		private JTextField txtInfomationOfEveryday;
+		private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd");
 		
 		/**
 		 * Create the application.
+		 * @throws ParseException 
 		 */
 		
-		public Analyse_comparison_2(Client client, int cID, String date1, String date2) {
+		public Analyse_comparison_2(Client client, int cID, String date1, String date2) throws ParseException {
 			this.client = client;
 			this.cityID = cID;
 			this.date1 = date1;
 			this.date2 = date2;
 			initialize();
 			
-			getAnalyseInfo();
-			getDailyInfo();
-			
-			/*
-			getSensorInfo(date1);
-			getCityInfo(date1);
-			getSensorInfo(date2);
-			getCityInfo(date2);
-			*/
+			 
+			bt=sdf.parse(date1); 
+			et=sdf.parse(date2); 
+			//getAnalyseInfo(bt);
+
+			while (bt.before(et) || bt.equals(et)) {
+				getDailyInfo(bt);
+				bt.setDate(bt.getDate() + 1);
+			}
 		}
 		
 		/**
@@ -138,15 +144,13 @@ import javax.swing.ScrollPaneConstants;
 		
 		private void setDataToField(JSONObject res) {
 			try {
-				jta.setText("" + res.getInt("sensorNb"));
-				/*
-				lblSensors.setText("" + res.getInt("sensorNb"));
-				lblStations.setText("" + res.getInt("stationNb"));
-				lblBollards.setText("" + res.getInt("bollardNb"));
-				lblVehicles.setText("" + res.getInt("vehicleNb"));
-				lblPollutionRate.setText(res.getInt("pollutionRate") + "%");
-				lblExceeding.setText(res.getInt("exceedingRate") + "%");
-				*/
+				jta1.setText(jta1.getText() + sdf.format(bt).toString());
+				jta1.setText(jta1.getText() + "\n" + "Air Sensors installed in city : " + res.getInt("sensorNb"));
+				jta1.setText(jta1.getText() + "\n" + "Tramway Stations : " + res.getInt("stationNb"));
+				jta1.setText(jta1.getText() + "\n" + "Retractable Bollards : " + res.getInt("bollardNb"));
+				jta1.setText(jta1.getText() + "\n" + "Vehicles in city : " + res.getInt("vehicleNb"));
+				jta1.setText(jta1.getText() + "\n" + "Pollution rate : " + res.getInt("pollutionRate") + "%");
+				jta1.setText(jta1.getText() + "\n" + "Pollution exceeding rate : " + res.getInt("exceedingRate") + "%\n\n");
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
@@ -154,53 +158,25 @@ import javax.swing.ScrollPaneConstants;
 		
 		private void setDataToField1(JSONObject res) {
 			try {
-				jta1.setText(date1);
+				jta1.setText(jta1.getText() + sdf.format(bt));
 				jta1.setText(jta1.getText() + "\n" + "Air Sensors installed in city : " + res.getInt("sensorNb"));
 				jta1.setText(jta1.getText() + "\n" + "Tramway Stations : " + res.getInt("stationNb"));
 				jta1.setText(jta1.getText() + "\n" + "Retractable Bollards : " + res.getInt("bollardNb"));
 				jta1.setText(jta1.getText() + "\n" + "Vehicles in city : " + res.getInt("vehicleNb"));
 				jta1.setText(jta1.getText() + "\n" + "Pollution rate : " + res.getInt("pollutionRate") + "%");
-				jta1.setText(jta1.getText() + "\n" + "Pollution exceeding rate : " + res.getInt("exceedingRate") + "%");
+				jta1.setText(jta1.getText() + "\n" + "Pollution exceeding rate : " + res.getInt("exceedingRate") + "%\n\n");
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
 			
 		}	
-		public void getAnalyseInfo() {
+		public void getAnalyseInfo(Date date) {
 			try {
 				client.setResponseData(null);
 				JSONObject bodyItem = new JSONObject();
 				bodyItem.put("ID", "" + cityID);
-				bodyItem.put("date1", date1);
-				bodyItem.put("date2", date2);
-
-				SendPackage sendPa = new SendPackage();
-				sendPa.setApi(ApiEnum.ANALYSE_DATE);
-				sendPa.setBody(bodyItem);
-				client.setSendP(sendPa);
-
-				JSONObject res = null;
-				while (res == null) {
-					res = client.getResponseData();
-
-					System.out.println("wait res:" + res);
-					if (res != null) {
-						// if success true - get data bind to table
-						setDataToField((res.getJSONArray("data")).getJSONObject(0));
-					}
-				}
-				// CLOSE
-			} catch (JSONException e) {
-				e.printStackTrace();
-			}
-		}
-		
-		public void getDailyInfo() {
-			try {
-				client.setResponseData(null);
-				JSONObject bodyItem = new JSONObject();
-				bodyItem.put("ID", "" + cityID);
-				bodyItem.put("date", date1);
+				bodyItem.put("date", sdf.format(date));
+				//bodyItem.put("date2", date2);
 
 				SendPackage sendPa = new SendPackage();
 				sendPa.setApi(ApiEnum.ANALYSE_DATE);
@@ -221,5 +197,36 @@ import javax.swing.ScrollPaneConstants;
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
+		}
+		
+		public void getDailyInfo(Date date) throws ParseException {
+			
+			try {
+				client.setResponseData(null);
+				JSONObject bodyItem = new JSONObject();
+				bodyItem.put("ID", "" + cityID);
+				bodyItem.put("date", sdf.format(date));
+				//bodyItem.put("date2", date2);
+
+				SendPackage sendPa = new SendPackage();
+				sendPa.setApi(ApiEnum.ANALYSE_DATE);
+				sendPa.setBody(bodyItem);
+				client.setSendP(sendPa);
+
+				JSONObject res = null;
+				while (res == null) {
+					res = client.getResponseData();
+
+					System.out.println("wait res:" + res);
+					if (res != null) {
+						// if success true - get data bind to table
+						setDataToField1((res.getJSONArray("data")).getJSONObject(0));
+					}
+				}
+				// CLOSE
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+			
 		}
 }

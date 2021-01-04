@@ -130,20 +130,19 @@ public class AnalyseProvider {
 				e1.printStackTrace();
 				return null;
 			}
-
 		}
 	}
 	
-	public static ApiResponse getAnalyseInfoByPeriod(int cID, String date, String date1) {
+	public static ApiResponse getAnalyseInfoByPeriod(int cID, String date1, String date2) {
 		try {
-			String sql =  "SELECT (SELECT date FROM AnalyseInfo WHERE date = '" + date + "') AS date"
-					+ ",(SELECT COUNT(*) FROM airSensor WHERE installDate <= '" + date + "') AS sensorNb"
-					+ ",(SELECT COUNT(*) FROM station WHERE openDate <= '" + date + "') AS stationNb"
+			String sql =  "SELECT (SELECT date FROM AnalyseInfo WHERE date = '" + date1 + "') AS date"
+					+ ",(SELECT COUNT(*) FROM airSensor WHERE installDate <= '" + date1 + "') AS sensorNb"
+					+ ",(SELECT COUNT(*) FROM station WHERE openDate <= '" + date1 + "') AS stationNb"
 					+ ",(SELECT COUNT(*) FROM bollardEquipment) AS bollardNb"
-					+ ",(SELECT nbVehicleInCity FROM vehicleHistory WHERE date <= '" + date + "' ORDER BY historyId DESC LIMIT 1) AS vehicleNb"
-					+ ",(SELECT SUM(no2) / COUNT(no2) FROM airSensorHistory WHERE date = '" + date + "') AS pollutionRate1"
-					+ ",(SELECT SUM(pm10) / COUNT(pm10) FROM airSensorHistory WHERE date = '" + date + "') AS pollutionRate2"
-					+ ",(SELECT SUM(o3) / COUNT(o3) FROM airSensorHistory WHERE date = '" + date + "') AS pollutionRate3"
+					+ ",(SELECT nbVehicleInCity FROM vehicleHistory WHERE date <= '" + date1 + "' ORDER BY historyId DESC LIMIT 1) AS vehicleNb"
+					+ ",(SELECT SUM(no2) / COUNT(no2) FROM airSensorHistory WHERE date = '" + date1 + "') AS pollutionRate1"
+					+ ",(SELECT SUM(pm10) / COUNT(pm10) FROM airSensorHistory WHERE date = '" + date1 + "') AS pollutionRate2"
+					+ ",(SELECT SUM(o3) / COUNT(o3) FROM airSensorHistory WHERE date = '" + date1 + "') AS pollutionRate3"
 					;
 			st =  conn.createStatement();
 			ResultSet rs = st.executeQuery(sql);        	

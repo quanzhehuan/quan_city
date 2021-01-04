@@ -217,8 +217,15 @@ public class Analyse_comparison{
 				date3 = txtDate3.getText();
 				date4 = txtDate4.getText();
 				if (isValidDate(date3) && isValidDate(date4)) {
-					Analyse_comparison_2 c1 = new Analyse_comparison_2(client, cityID, date3, date4);
-					c1.getJFrame().setVisible(true);
+					Analyse_comparison_2 c1;
+					try {
+						c1 = new Analyse_comparison_2(client, cityID, date3, date4);
+						c1.getJFrame().setVisible(true);
+					} catch (ParseException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					//c1.getJFrame().setVisible(true);
 				} else {
 					while(!isValidDate(date3)) {
 						txtDate3.setText(date3);
@@ -228,8 +235,15 @@ public class Analyse_comparison{
 						txtDate4.setText(date4);
 						date4 = JOptionPane.showInputDialog("Your second date is not correct. Please input SECOND DATE (yyyy-mm-dd): ");
 					}
-					Analyse_comparison_2 c1 = new Analyse_comparison_2(client, cityID, date3, date4);
-					c1.getJFrame().setVisible(true);
+					Analyse_comparison_2 c1;
+					try {
+						c1 = new Analyse_comparison_2(client, cityID, date3, date4);
+						c1.getJFrame().setVisible(true);
+					} catch (ParseException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					//c1.getJFrame().setVisible(true);
 				}
 			}
 		});
@@ -256,7 +270,7 @@ public class Analyse_comparison{
 
 	private static boolean isValidDate(String str) {
         boolean convertSuccess = true;
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-mm-dd");
         try {
             format.setLenient(false);
             format.parse(str);

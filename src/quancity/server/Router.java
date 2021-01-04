@@ -253,9 +253,9 @@ public class Router {
 		return null;
 	}
 	
-	public static String AnalysePeriod(int cID, String date, String date1) {
+	public static String AnalysePeriod(int cID, String date1, String date2) {
 		try {
-			return analyseProvider.getAnalyseInfoByPeriod(cID, date, date1).toString();
+			return analyseProvider.getAnalyseInfoByPeriod(cID, date1, date2).toString();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -300,6 +300,9 @@ public class Router {
 				body = input.getJSONObject("body");
 				return AnalyseDate((int)body.getInt("ID"), body.getString("date"));
 			
+			case "ANA_DAILY_INFO":
+				body = input.getJSONObject("body");
+				return AnalysePeriod((int)body.getInt("ID"), body.getString("date1"), body.getString("date2"));
 			/*
 			// tramway
 			case "TRAMWAY_GET_ONE":
